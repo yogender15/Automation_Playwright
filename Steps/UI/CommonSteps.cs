@@ -186,6 +186,8 @@ namespace BSTVOAQAAutomation.Playwright.Steps.UI
 
         // ── Assertions ───────────────────────────────────────────────────────────
 
+        [Given(@"User validates the status as '(.*)'")]
+        [When(@"User validates the status as '(.*)'")]
         [Then(@"User validates the status as '(.*)'")]
         public async Task ThenUserValidatesTheStatusAs(string expectedStatus)
         {
@@ -195,6 +197,8 @@ namespace BSTVOAQAAutomation.Playwright.Steps.UI
             Log.Information("Status validated: {Status}", expectedStatus);
         }
 
+        [Given(@"User validate '(.*)' status of '(.*)'")]
+        [When(@"User validate '(.*)' status of '(.*)'")]
         [Then(@"User validate '(.*)' status of '(.*)'")]
         public async Task ThenUserValidateStatusOf(string status, string recordType)
         {

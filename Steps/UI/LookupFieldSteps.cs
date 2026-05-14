@@ -18,6 +18,8 @@ namespace BSTVOAQAAutomation.Playwright.Steps.UI
         }
 
         [Given(@"User looked for '(.*)' field value")]
+        [When(@"User looked for '(.*)' field value")]
+        [Then(@"User looked for '(.*)' field value")]
         public async Task GivenUserLookedForFieldValue(string fieldName)
         {
             var testData = GetTestData();
@@ -31,6 +33,8 @@ namespace BSTVOAQAAutomation.Playwright.Steps.UI
         }
 
         [Given(@"User looked for '(.*)' field value only when data not entered")]
+        [When(@"User looked for '(.*)' field value only when data not entered")]
+        [Then(@"User looked for '(.*)' field value only when data not entered")]
         public async Task GivenUserLookedForFieldValueOnlyWhenDataNotEntered(string fieldName)
         {
             var input = _pw.Page.Locator(
@@ -46,11 +50,13 @@ namespace BSTVOAQAAutomation.Playwright.Steps.UI
                     return;
                 }
             }
-            catch { /* field not visible yet */ }
+            catch { }
             await GivenUserLookedForFieldValue(fieldName);
         }
 
         [Given(@"User looked for first element '(.*)' field value only when data not entered")]
+        [When(@"User looked for first element '(.*)' field value only when data not entered")]
+        [Then(@"User looked for first element '(.*)' field value only when data not entered")]
         public async Task GivenUserLookedForFirstElementFieldValueOnlyWhenDataNotEntered(string fieldName)
         {
             var testData = GetTestData();
@@ -77,6 +83,8 @@ namespace BSTVOAQAAutomation.Playwright.Steps.UI
         }
 
         [Given(@"User looked for '(.*)' field value from '(.*)' for '(.*)'")]
+        [When(@"User looked for '(.*)' field value from '(.*)' for '(.*)'")]
+        [Then(@"User looked for '(.*)' field value from '(.*)' for '(.*)'")]
         public async Task GivenUserLookedForFieldValueFromFor(string fieldName, string sheetName, string rowId)
         {
             var util = new ExcelTestDataUtility(Config.TestDataExcelFilePath);
@@ -88,17 +96,18 @@ namespace BSTVOAQAAutomation.Playwright.Steps.UI
         }
 
         [Given(@"User looked for value '(.*)' in '(.*)' field")]
+        [When(@"User looked for value '(.*)' in '(.*)' field")]
+        [Then(@"User looked for value '(.*)' in '(.*)' field")]
         public async Task GivenUserLookedForValueInField(string value, string fieldName)
         {
             _scenarioContext[fieldName] = value;
             await FillLookupField(fieldName, value);
         }
 
-        // ── Shared lookup helper (also called by DynamicsSteps) ──────────────────
+        // ── Shared lookup helpers ────────────────────────────────────────────────
 
         internal async Task FillLookupField(string fieldName, string value)
         {
-            // Dynamics lookup: find the search input within the lookup container
             var input = _pw.Page.Locator(
                 $"input[aria-label='{fieldName}'], " +
                 $"input[aria-label*='{fieldName} Search'], " +
@@ -109,10 +118,8 @@ namespace BSTVOAQAAutomation.Playwright.Steps.UI
             await input.ClickAsync();
             await _pw.Page.Keyboard.PressAsync("Control+A");
             await input.FillAsync(value);
-
             await _pw.Page.WaitForTimeoutAsync(1500);
 
-            // Click the first matching suggestion in the Dynamics lookup dropdown
             var suggestion = _pw.Page.Locator(
                 $"[aria-label='{value}'], " +
                 $"li[role='option']:has-text('{value}'), " +
@@ -128,10 +135,8 @@ namespace BSTVOAQAAutomation.Playwright.Steps.UI
             catch { }
 
             if (!clicked)
-            {
-                // Fallback: press Enter to accept first suggestion
                 await _pw.Page.Keyboard.PressAsync("Enter");
-            }
+
             Log.Information("Filled lookup '{Field}' with '{Value}'", fieldName, value);
         }
 

@@ -19,6 +19,8 @@ namespace BSTVOAQAAutomation.Playwright.Steps.UI
         // ── Text input ───────────────────────────────────────────────────────────
 
         [Given(@"User enter data for '(.*)' field value")]
+        [When(@"User enter data for '(.*)' field value")]
+        [Then(@"User enter data for '(.*)' field value")]
         public async Task GivenUserEnterDataForFieldValue(string fieldName)
         {
             var testData = GetTestData();
@@ -28,6 +30,8 @@ namespace BSTVOAQAAutomation.Playwright.Steps.UI
         }
 
         [Given(@"User enter data for '(.*)' field value only when data not entered")]
+        [When(@"User enter data for '(.*)' field value only when data not entered")]
+        [Then(@"User enter data for '(.*)' field value only when data not entered")]
         public async Task GivenUserEnterDataForFieldValueOnlyWhenDataNotEntered(string fieldName)
         {
             var field = _pw.Page.Locator($"input[aria-label='{fieldName}'], input[aria-label*='{fieldName}']").First;
@@ -41,13 +45,15 @@ namespace BSTVOAQAAutomation.Playwright.Steps.UI
                     return;
                 }
             }
-            catch { /* field may not be visible yet — fall through to enter */ }
+            catch { }
             await GivenUserEnterDataForFieldValue(fieldName);
         }
 
         // ── Textarea ─────────────────────────────────────────────────────────────
 
         [Given(@"User enter data for '(.*)' text area field value")]
+        [When(@"User enter data for '(.*)' text area field value")]
+        [Then(@"User enter data for '(.*)' text area field value")]
         public async Task GivenUserEnterDataForTextAreaFieldValue(string fieldName)
         {
             var testData = GetTestData();
@@ -62,9 +68,10 @@ namespace BSTVOAQAAutomation.Playwright.Steps.UI
         // ── UPRN / context-driven ─────────────────────────────────────────────────
 
         [Given(@"User enters data in ""(.*)"" field")]
+        [When(@"User enters data in ""(.*)"" field")]
+        [Then(@"User enters data in ""(.*)"" field")]
         public async Task GivenUserEntersDataInField(string fieldName)
         {
-            // UPRN value typically comes from DB step stored in scenarioContext
             string value = "";
             if (_scenarioContext.TryGetValue("uprn", out var uprnObj))
                 value = uprnObj?.ToString() ?? "";
@@ -82,6 +89,8 @@ namespace BSTVOAQAAutomation.Playwright.Steps.UI
         }
 
         [Given(@"User enter data for '(.*)' field value from '(.*)' for '(.*)'")]
+        [When(@"User enter data for '(.*)' field value from '(.*)' for '(.*)'")]
+        [Then(@"User enter data for '(.*)' field value from '(.*)' for '(.*)'")]
         public async Task GivenUserEnterDataForFieldValueFromFor(string fieldName, string sheetName, string rowId)
         {
             var util = new ExcelTestDataUtility(Config.TestDataExcelFilePath);
@@ -90,6 +99,8 @@ namespace BSTVOAQAAutomation.Playwright.Steps.UI
         }
 
         [Given(@"User enter random number for '(.*)' field value")]
+        [When(@"User enter random number for '(.*)' field value")]
+        [Then(@"User enter random number for '(.*)' field value")]
         public async Task GivenUserEnterRandomNumberForFieldValue(string fieldName)
         {
             string value = new Random().Next(100000, 999999).ToString();
