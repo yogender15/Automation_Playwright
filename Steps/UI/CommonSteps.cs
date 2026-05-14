@@ -34,11 +34,16 @@ namespace BSTVOAQAAutomation.Playwright.Steps.UI
         [Given(@"User click on '(.*)' under '(.*)' section")]
         public async Task GivenUserClickOnUnderSection(string menuItem, string sectionName)
         {
+            // Selector mirrors old NavigateToMenuItem_new:
+            // ul[aria-label='sectionName'] li[aria-label='menuItem']
+            // Uses JS click (EvaluateAsync) same as old ClickUsingJavascript.
             var locator = _pw.Page.Locator(
-                $"//li[@data-text='{sectionName}']//ul//li[@data-text='{menuItem}'] | " +
-                $"//span[text()='{menuItem}']/ancestor::li[@role='treeitem']");
-            await locator.First.ClickAsync();
-            await _pw.Page.WaitForLoadStateAsync(LoadState.NetworkIdle);
+                $"ul[aria-label='{sectionName}'] li[aria-label='{menuItem}'], " +
+                $"[aria-label='{menuItem}'][role='treeitem']").First;
+
+            await locator.WaitForAsync(new() { State = WaitForSelectorState.Visible, Timeout = 30_000 });
+            await locator.EvaluateAsync("el => el.click()");
+            await _pw.Page.WaitForLoadStateAsync(LoadState.DOMContentLoaded);
             Log.Information("Clicked '{Item}' under '{Section}'", menuItem, sectionName);
         }
 

@@ -40,8 +40,12 @@ namespace BSTVOAQAAutomation.Playwright.Helpers
                 ? _context.Pages[0]
                 : await _context.NewPageAsync();
 
-            // Matches DriverHelper: Driver.Manage().Timeouts().PageLoad = 360 s
-            Page.SetDefaultTimeout(PageLoadTimeoutMs);
+            // DefaultTimeout covers element interactions (locator waits, clicks, fills).
+            // Keep this short — old Selenium used explicit waits of 10-30s, not 360s.
+            // 360s only applies to full page/navigation loads, mirroring DriverHelper:
+            //   Driver.Manage().Timeouts().PageLoad = 360s  (navigation)
+            //   ImplicitWait was NOT set in DriverHelper (element waits were explicit/short)
+            Page.SetDefaultTimeout(30_000);
             Page.SetDefaultNavigationTimeout(PageLoadTimeoutMs);
 
             // Apply 80% zoom on every page load — mirrors the commented-out
