@@ -24,11 +24,14 @@ namespace BSTVOAQAAutomation.Playwright.Helpers
             {
                 Headless          = headless,
                 Channel           = "msedge",
-                ViewportSize      = new ViewportSize { Width = 1920, Height = 1080 },
+                // null lets --start-maximized control the window size.
+                // A fixed ViewportSize overrides the flag and prevents true maximization.
+                ViewportSize      = null,
                 IgnoreHTTPSErrors = true,
                 // Do NOT add --disable-extensions: it kills Edge's built-in AAD SSO extension.
                 Args = new[]
                 {
+                    "--start-maximized",
                     "--no-first-run",
                     "--disable-features=ChromeWhatsNew",
                     "--disable-session-crashed-bubble"
@@ -41,6 +44,10 @@ namespace BSTVOAQAAutomation.Playwright.Helpers
             Page = _context.Pages.Count > 0
                 ? _context.Pages[0]
                 : await _context.NewPageAsync();
+
+            // Apply 80% zoom on every page load so Dynamics fits on screen without scrolling.
+            // AddInitScript runs before any page script, persisting across navigations.
+            await Page.AddInitScriptAsync("document.documentElement.style.zoom = '0.8'");
         }
 
         public async Task DisposeAsync()
