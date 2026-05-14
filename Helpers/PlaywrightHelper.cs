@@ -20,9 +20,10 @@ namespace BSTVOAQAAutomation.Playwright.Helpers
             {
                 "chrome"  => await _playwright.Chromium.LaunchAsync(launchOptions),
                 "firefox" => await _playwright.Firefox.LaunchAsync(launchOptions),
-                "edge"    => await _playwright.Chromium.LaunchAsync(launchOptions with
+                "edge"    => await _playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
                 {
-                    Channel = "msedge"
+                    Headless = headless,
+                    Channel  = "msedge"
                 }),
                 _ => throw new ArgumentException($"Unsupported browser: {browserType}")
             };
