@@ -21,10 +21,9 @@ namespace BSTVOAQAAutomation.Playwright.Pages.UI.RBSP_BP
             "[data-id='AppTabBar'], " +
             ".ms-AppBar");
 
-        // Legal Notice "Continue" button shown on every fresh session
-        private ILocator LegalNoticeContinue => _page.Locator(
-            "button:has-text('Continue'), " +
-            "input[value='Continue']");
+        // Legal Notice "Continue" button — exact text match mirrors the old Selenium
+        // XPath: //button[text()='Continue']  (text-is() is Playwright's exact equivalent)
+        private ILocator LegalNoticeContinue => _page.Locator("button:text-is('Continue')");
 
         public async Task GoToLoginPageAsync(string baseUrl)
         {
