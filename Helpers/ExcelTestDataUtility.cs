@@ -15,8 +15,27 @@ namespace BSTVOAQAAutomation.Playwright.Helpers
         {
             var testData = new Dictionary<string, string>();
 
-            using var package = new ExcelPackage(new FileInfo(filePath));
+            var resolvedPath = Path.GetFullPath(filePath);
+            if (!File.Exists(resolvedPath))
+                throw new FileNotFoundException(
+                    $"TestData.xlsx not found at: {resolvedPath}");
+
+            using var package = new ExcelPackage(new FileInfo(resolvedPath));
             var worksheet = package.Workbook.Worksheets[sheetName];
+
+            if (worksheet == null)
+            {
+                var available = string.Join(", ",
+                    package.Workbook.Worksheets.Select(w => w.Name));
+                throw new InvalidOperationException(
+                    $"Sheet '{sheetName}' not found in '{resolvedPath}'. " +
+                    $"Available sheets: [{available}]");
+            }
+
+            if (worksheet.Dimension == null)
+                throw new InvalidOperationException(
+                    $"Sheet '{sheetName}' in '{resolvedPath}' is empty.");
+
             var headers = GetHeaders(worksheet);
             var row = FindRowByColumnValue(worksheet, headers, "TestDataID", testCaseID);
 
