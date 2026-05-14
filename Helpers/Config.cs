@@ -28,6 +28,10 @@ namespace BSTVOAQAAutomation.Playwright.Helpers
             userFilePath           = ConfigurationManager.AppSettings["userFilePath"] ?? "";
             BrowserType            = ConfigurationManager.AppSettings["BrowserType"] ?? "edge";
             BaseProposedEffectiveDate = ConfigurationManager.AppSettings["BaseProposedEffectiveDate"] ?? "";
+            DBServer               = ConfigurationManager.AppSettings["DBServer"] ?? "";
+            DBPort                 = ConfigurationManager.AppSettings["DBPort"] ?? "5432";
+            DBName                 = ConfigurationManager.AppSettings["DBName"] ?? "";
+            ScreenshotFolder       = ConfigurationManager.AppSettings["ScreenshotFolder"] ?? "";
             EnvironmentValue       = Environment.GetEnvironmentVariable("TestEnvironment",
                                          EnvironmentVariableTarget.User) ?? "";
         }
@@ -56,5 +60,9 @@ namespace BSTVOAQAAutomation.Playwright.Helpers
         public static string userFilePath             { get; set; }
         public static string BrowserType              { get; set; }
         public static string BaseProposedEffectiveDate { get; set; }
+        public static string DBServer                 { get; set; }
+        public static string DBPort                   { get; set; }
+        public static string DBName                   { get; set; }
+        public static string ScreenshotFolder         { get; set; }
     }
 }
