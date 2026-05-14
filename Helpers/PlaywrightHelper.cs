@@ -6,7 +6,6 @@ namespace BSTVOAQAAutomation.Playwright.Helpers
     {
         public IPage Page { get; private set; } = null!;
 
-        private IBrowser _browser = null!;
         private IBrowserContext _context = null!;
         private IPlaywright _playwright = null!;
 
@@ -14,34 +13,32 @@ namespace BSTVOAQAAutomation.Playwright.Helpers
         {
             _playwright = await Microsoft.Playwright.Playwright.CreateAsync();
 
-            var launchOptions = new BrowserTypeLaunchOptions { Headless = headless };
+            // Use the user's existing Edge profile so Windows SSO works automatically —
+            // same behaviour as the existing Selenium framework which also used the live profile.
+            var userDataDir = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                "Microsoft", "Edge", "User Data", "Default");
 
-            _browser = browserType.ToLower() switch
+            var options = new BrowserTypeLaunchPersistentContextOptions
             {
-                "chrome"  => await _playwright.Chromium.LaunchAsync(launchOptions),
-                "firefox" => await _playwright.Firefox.LaunchAsync(launchOptions),
-                "edge"    => await _playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
-                {
-                    Headless = headless,
-                    Channel  = "msedge"
-                }),
-                _ => throw new ArgumentException($"Unsupported browser: {browserType}")
+                Headless   = headless,
+                Channel    = "msedge",
+                ViewportSize = new ViewportSize { Width = 1920, Height = 1080 },
+                IgnoreHTTPSErrors = true,
+                Args = new[] { "--disable-extensions", "--no-first-run" }
             };
 
-            _context = await _browser.NewContextAsync(new BrowserNewContextOptions
-            {
-                ViewportSize = new ViewportSize { Width = 1920, Height = 1080 },
-                IgnoreHTTPSErrors = true
-            });
+            _context = await _playwright.Chromium.LaunchPersistentContextAsync(
+                userDataDir, options);
 
-            Page = await _context.NewPageAsync();
+            Page = _context.Pages.Count > 0
+                ? _context.Pages[0]
+                : await _context.NewPageAsync();
         }
 
         public async Task DisposeAsync()
         {
-            if (Page is not null)    await Page.CloseAsync();
             if (_context is not null) await _context.CloseAsync();
-            if (_browser is not null) await _browser.CloseAsync();
             _playwright?.Dispose();
         }
 
