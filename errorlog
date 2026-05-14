@@ -1,18 +1,13 @@
  DE01_CTPRELMGMT_1607_CTPRELMGMT_1635_E2EDataEnhancement_FullProcessOfAmendingACommittedPADSet
    Source: DataEnhancement.feature line 10
-   Duration: 43.3 sec
+   Duration: 51 sec
 
   Message: 
-System.TimeoutException : Timeout 30000ms exceeded.
-  ----> System.TimeoutException : Timeout 30000ms exceeded.
+System.IO.FileNotFoundException : SQL queries file not found: C:\Users\7933388\BSTVOAQAAutomation_Playwright\Automation_Playwright\bin\SQLQueries.properties
 
   Stack Trace: 
-Waiter.WaitForPromiseAsync[T](Task`1 task, Action dispose)
-Frame.WaitForLoadStateAsync(Nullable`1 state, FrameWaitForLoadStateOptions options)
-BasePage.WaitForPageReadyAsync() line 35
-LoginPage.GoToLoginPageAsync(String baseUrl) line 22
-LoginPage.LoginAsync(String baseUrl) line 71
-LoginSteps.GivenUserIsLoggedInToDynamicsApplicationToWorkForCase(String caseName) line 25
+DBHelper.GetDBResult(String queryKey) line 15
+DynamicsSteps.GivenUserConnectsToDBAndRetrievesDataFor(String propertyKey, Table table) line 28
 AsyncMethodHelper.ConvertTaskOfT(Task task, Boolean getValue)
 BindingDelegateInvoker.InvokeDelegateAsync(Delegate bindingDelegate, Object[] invokeArgs, ExecutionContextHolder executionContext)
 BindingInvoker.InvokeBindingAsync(IBinding binding, IContextManager contextManager, Object[] arguments, ITestTracer testTracer, DurationHolder durationHolder)
@@ -33,25 +28,25 @@ TestMethodCommand.RunTestMethod(TestExecutionContext context)
 TestMethodCommand.Execute(TestExecutionContext context)
 <>c__DisplayClass1_0.<Execute>b__0()
 DelegatingTestCommand.RunTestMethodInThreadAbortSafeZone(TestExecutionContext context, Action action)
---TimeoutException
-<>c__DisplayClass2_0.<WithTimeout>b__0()
-TaskHelper.WithTimeout(Task task, Func`1 timeoutAction, TimeSpan timeout, CancellationToken cancellationToken)
-Waiter.WaitForPromiseAsync[T](Task`1 task, Action dispose)
 
   Standard Output: 
-[14:20:20 INF] Browser started for scenario: DE01_CTPRELMGMT-1607_CTPRELMGMT-1635_E2E Data Enhancement - Full process of Amending a Committed PAD set
+[15:03:23 INF] Browser started for scenario: DE01_CTPRELMGMT-1607_CTPRELMGMT-1635_E2E Data Enhancement - Full process of Amending a Committed PAD set
 Given User uses test data with ID 'DE_001' from 'DataEnhancement' sheet
-[14:20:21 INF] Test data loaded: DE_001 from sheet DataEnhancement
--> done: CommonSteps.GivenUserUsesTestDataWithIDFromSheet("DE_001", "DataEnhancement") (0.6s)
+[15:03:24 INF] Test data loaded: DE_001 from sheet DataEnhancement
+-> done: CommonSteps.GivenUserUsesTestDataWithIDFromSheet("DE_001", "DataEnhancement") (1.0s)
 Given User is logged in to Dynamics application to work for "E2E_Committed_Amend_DE" case
--> error: Timeout 30000ms exceeded. (31.2s)
+[15:03:25 INF] Navigated to: https://voabstsit.crm11.dynamics.com/
+[15:04:10 INF] Legal Notice dismissed — JS click on Continue
+[15:04:10 INF] User is ready in Dynamics 365
+[15:04:10 INF] Logged in for case: E2E_Committed_Amend_DE
+-> done: LoginSteps.GivenUserIsLoggedInToDynamicsApplicationToWorkForCase("E2E_Committed_Ame...") (45.8s)
 And User collapse if site map navigation expanded on left pane
--> skipped because of previous errors
+-> done: LoginSteps.GivenUserCollapseIfSiteMapNavigationExpandedOnLeftPane() (0.0s)
 And User connects to the DB and retrieves the data for 'findHereditament_WestLancashire_DE'
   --- table step argument ---
   | fieldName |
   | uprn      |
--> skipped because of previous errors
+-> error: SQL queries file not found: C:\Users\7933388\BSTVOAQAAutomation_Playwright\Automation_Playwright\bin\SQLQueries.properties (0.0s)
 Given User click on 'Requests' under 'Service' section
 -> skipped because of previous errors
 And User click on 'New' button from 'menubar'
@@ -564,5 +559,5 @@ public void ThenUserClosesBrowser()
     throw new PendingStepException();
 }
 
-[14:20:52 ERR] Scenario failed — screenshot saved: 20260514_142052_561_FAILED.png
-[14:21:00 INF] Browser disposed
+[15:04:10 ERR] Scenario failed — screenshot saved: 20260514_150410_638_FAILED.png
+[15:04:11 INF] Browser disposed
