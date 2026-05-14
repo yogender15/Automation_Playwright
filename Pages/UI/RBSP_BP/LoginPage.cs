@@ -8,68 +8,104 @@ namespace BSTVOAQAAutomation.Playwright.Pages.UI.RBSP_BP
     {
         public LoginPage(IPage page) : base(page) { }
 
-        // Locators — defined once, re-evaluated on every use (no stale element risk)
-        private ILocator EmailField      => _page.Locator("input[type='email']");
-        private ILocator NextButton      => _page.Locator("input[value='Next'], button:has-text('Next')");
-        private ILocator PasswordField   => _page.Locator("input[type='password']");
-        private ILocator SignInButton    => _page.Locator("input[value='Sign in'], button:has-text('Sign in')");
-        private ILocator StaySignedInNo  => _page.Locator("input[value='No'], button:has-text('No')");
-        private ILocator AppTitle        => _page.Locator("[title='Dynamics 365']");
+        private ILocator EmailField     => _page.Locator("input[type='email']");
+        private ILocator NextButton     => _page.Locator("input[value='Next'], button:has-text('Next')");
+        private ILocator PasswordField  => _page.Locator("input[type='password']");
+        private ILocator SignInButton   => _page.Locator("input[value='Sign in'], button:has-text('Sign in')");
+        private ILocator StaySignedInNo => _page.Locator("input[value='No'], button:has-text('No')");
+
+        // Reliable "Dynamics app is loaded" indicator — works for all VOA-branded instances.
+        // AppTitle ([title='Dynamics 365']) doesn't match the VOA white-labelled deployment.
+        private ILocator DynamicsReady  => _page.Locator(
+            "[data-id='appHeaderContainer'], " +
+            "[data-id='AppTabBar'], " +
+            ".ms-AppBar");
+
+        // Legal Notice "Continue" button shown on every fresh session
+        private ILocator LegalNoticeContinue => _page.Locator(
+            "button:has-text('Continue'), " +
+            "input[value='Continue']");
 
         public async Task GoToLoginPageAsync(string baseUrl)
         {
-            await _page.GotoAsync(baseUrl);
-            await WaitForPageReadyAsync();
+            // Use DOMContentLoaded — Dynamics never reaches NetworkIdle due to
+            // continuous background requests, so WaitForPageReadyAsync times out.
+            await _page.GotoAsync(baseUrl, new PageGotoOptions
+            {
+                WaitUntil = WaitUntilState.DOMContentLoaded,
+                Timeout   = 60_000
+            });
             Log.Information("Navigated to: {Url}", baseUrl);
         }
 
         public async Task LoginWithExistingUserAsync()
         {
-            // On HMRC VMs the Edge profile already holds an active Azure AD session,
-            // so Dynamics loads without any interaction. Wait up to 45 s for SSO to
-            // complete before falling back to manual steps.
+            // On HMRC VMs, the Edge profile already holds an active Azure AD session.
+            // Dynamics should load without any login interaction.
+            bool appLoaded = false;
             try
             {
-                await AppTitle.WaitForAsync(new() { Timeout = 45_000 });
-                Log.Information("Dynamics 365 loaded via Windows SSO — no login needed");
-                return;
+                await DynamicsReady.First.WaitForAsync(
+                    new() { State = WaitForSelectorState.Visible, Timeout = 45_000 });
+                appLoaded = true;
+                Log.Information("Dynamics app header visible — SSO succeeded");
             }
-            catch { /* SSO did not complete — login page appeared */ }
+            catch { /* login page appeared instead */ }
 
-            // Login page visible: try to sign in.
-            // Note: Username/Password are set to Azure DevOps pipeline vars on CI.
-            // For local runs the HMRC VM Windows SSO path above should have succeeded.
-            if (await EmailField.IsVisibleAsync())
+            if (!appLoaded)
             {
-                await EmailField.FillAsync(Config.Username);
-                await NextButton.ClickAsync();
-
-                // Wait for password field — it may not appear if AAD picks up SSO mid-flow
-                try
+                // Fall back to credential login (used by CI pipeline where vars are substituted)
+                if (await EmailField.IsVisibleAsync())
                 {
-                    await PasswordField.WaitForAsync(new() { Timeout = 15_000 });
-                    await PasswordField.FillAsync(Config.Password);
-                    await SignInButton.ClickAsync();
-                }
-                catch { /* AAD completed SSO after email step — no password needed */ }
+                    await EmailField.FillAsync(Config.Username);
+                    await NextButton.ClickAsync();
 
-                try
-                {
-                    if (await StaySignedInNo.IsVisibleAsync())
-                        await StaySignedInNo.ClickAsync();
+                    try
+                    {
+                        await PasswordField.WaitForAsync(new() { Timeout = 15_000 });
+                        await PasswordField.FillAsync(Config.Password);
+                        await SignInButton.ClickAsync();
+                    }
+                    catch { /* AAD may have completed SSO after email — no password needed */ }
+
+                    try
+                    {
+                        if (await StaySignedInNo.IsVisibleAsync())
+                            await StaySignedInNo.ClickAsync();
+                    }
+                    catch { }
+
+                    await DynamicsReady.First.WaitForAsync(
+                        new() { State = WaitForSelectorState.Visible, Timeout = 60_000 });
                 }
-                catch { }
             }
 
-            // Final wait for Dynamics dashboard
-            await AppTitle.WaitForAsync(new() { Timeout = 60_000 });
-            Log.Information("User landed in Dynamics 365 dashboard");
+            // Always dismiss the Legal Notice dialog ("This is a Private Computer System")
+            // that Dynamics shows on each fresh session before letting the user in.
+            await DismissLegalNoticeAsync();
+
+            Log.Information("User is ready in Dynamics 365");
         }
 
         public async Task LoginAsync(string baseUrl)
         {
             await GoToLoginPageAsync(baseUrl);
             await LoginWithExistingUserAsync();
+        }
+
+        // ── Helpers ─────────────────────────────────────────────────────────────
+
+        private async Task DismissLegalNoticeAsync()
+        {
+            try
+            {
+                await LegalNoticeContinue.WaitForAsync(
+                    new() { State = WaitForSelectorState.Visible, Timeout = 8_000 });
+                await LegalNoticeContinue.ClickAsync();
+                await _page.WaitForLoadStateAsync(LoadState.DOMContentLoaded);
+                Log.Information("Legal Notice dismissed — clicked Continue");
+            }
+            catch { /* dialog not present — nothing to do */ }
         }
     }
 }
