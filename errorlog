@@ -3,13 +3,11 @@
    Duration: 28.8 sec
 
   Message: 
-System.ArgumentException : The path is empty. (Parameter 'path')
+System.NullReferenceException : Object reference not set to an instance of an object.
 
   Stack Trace: 
-Path.GetFullPath(String path)
-FileInfo.ctor(String originalPath, String fullPath, String fileName, Boolean isNormalized)
-FileInfo.ctor(String fileName)
-ExcelTestDataUtility.GetTestDataByID(String sheetName, String testCaseID) line 18
+ExcelTestDataUtility.GetHeaders(ExcelWorksheet worksheet) line 44
+ExcelTestDataUtility.GetTestDataByID(String sheetName, String testCaseID) line 20
 CommonSteps.GivenUserUsesTestDataWithIDFromSheet(String testCaseID, String sheetName) line 27
 RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
 MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
@@ -34,9 +32,9 @@ TestMethodCommand.Execute(TestExecutionContext context)
 DelegatingTestCommand.RunTestMethodInThreadAbortSafeZone(TestExecutionContext context, Action action)
 
   Standard Output: 
-[11:02:34 INF] Browser started for scenario: DE01_CTPRELMGMT-1607_CTPRELMGMT-1635_E2E Data Enhancement - Full process of Amending a Committed PAD set
+[11:55:38 INF] Browser started for scenario: DE01_CTPRELMGMT-1607_CTPRELMGMT-1635_E2E Data Enhancement - Full process of Amending a Committed PAD set
 Given User uses test data with ID 'DE_001' from 'DataEnhancement' sheet
--> error: The path is empty. (Parameter 'path') (0.0s)
+-> error: Object reference not set to an instance of an object. (0.4s)
 Given User is logged in to Dynamics application to work for "E2E_Committed_Amend_DE" case
 -> skipped because of previous errors
 And User collapse if site map navigation expanded on left pane
@@ -129,7 +127,7 @@ And User clicked on 'Select' button
 And User waits till Find Hereditament dialog disappears
 -> skipped because of previous errors
 And User click on 'Save' button from 'menubar'
--> binding error: Ambiguous step definitions found for step 'Given User click on 'Save' button from 'menubar'': BSTVOAQAAutomation_Playwright:BSTVOAQAAutomation.Playwright.Steps.UI.CommonSteps.GivenUserClickOnButtonFromMenubar(String), BSTVOAQAAutomation_Playwright:BSTVOAQAAutomation.Playwright.Steps.UI.CommonSteps.GivenUserClickOnSaveButtonFromMenubar()
+-> skipped because of previous errors
 And user waits till 'Saving...' 'progressbar' disappears
 -> skipped because of previous errors
 Then User validate 'Validating' status of 'Request'
@@ -618,5 +616,5 @@ public void ThenUserClosesBrowser()
     throw new PendingStepException();
 }
 
-[11:02:34 ERR] Scenario failed — screenshot saved: 20260514_110234_573_FAILED.png
-[11:02:56 INF] Browser disposed
+[11:55:39 ERR] Scenario failed — screenshot saved: 20260514_115539_223_FAILED.png
+[11:56:00 INF] Browser disposed
