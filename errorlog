@@ -4,13 +4,12 @@
 
   Message: 
 System.TimeoutException : Timeout 360000ms exceeded.
-Call log:
-  -   - waiting for Locator("//li[@data-text='Service']//ul//li[@data-text='Requests'] | //span[text()='Requests']/ancestor::li[@role='treeitem']").First
+  ----> System.TimeoutException : Timeout 360000ms exceeded.
 
   Stack Trace: 
-Connection.InnerSendMessageToServerAsync[T](ChannelOwner object, String method, Dictionary`2 dictionary, Boolean keepNulls)
-Connection.WrapApiCallAsync[T](Func`1 action, Boolean isInternal)
-CommonSteps.GivenUserClickOnUnderSection(String menuItem, String sectionName) line 40
+Waiter.WaitForPromiseAsync[T](Task`1 task, Action dispose)
+Frame.WaitForLoadStateAsync(Nullable`1 state, FrameWaitForLoadStateOptions options)
+CommonSteps.GivenUserClickOnButtonFromMenubar(String buttonName) line 69
 AsyncMethodHelper.ConvertTaskOfT(Task task, Boolean getValue)
 BindingDelegateInvoker.InvokeDelegateAsync(Delegate bindingDelegate, Object[] invokeArgs, ExecutionContextHolder executionContext)
 BindingInvoker.InvokeBindingAsync(IBinding binding, IContextManager contextManager, Object[] arguments, ITestTracer testTracer, DurationHolder durationHolder)
@@ -31,35 +30,38 @@ TestMethodCommand.RunTestMethod(TestExecutionContext context)
 TestMethodCommand.Execute(TestExecutionContext context)
 <>c__DisplayClass1_0.<Execute>b__0()
 DelegatingTestCommand.RunTestMethodInThreadAbortSafeZone(TestExecutionContext context, Action action)
+--TimeoutException
+<>c__DisplayClass2_0.<WithTimeout>b__0()
+TaskHelper.WithTimeout(Task task, Func`1 timeoutAction, TimeSpan timeout, CancellationToken cancellationToken)
+Waiter.WaitForPromiseAsync[T](Task`1 task, Action dispose)
 
   Standard Output: 
-[15:19:41 INF] Browser started for scenario: DE01_CTPRELMGMT-1607_CTPRELMGMT-1635_E2E Data Enhancement - Full process of Amending a Committed PAD set
+[15:38:32 INF] Browser started for scenario: DE01_CTPRELMGMT-1607_CTPRELMGMT-1635_E2E Data Enhancement - Full process of Amending a Committed PAD set
 Given User uses test data with ID 'DE_001' from 'DataEnhancement' sheet
-[15:19:43 INF] Test data loaded: DE_001 from sheet DataEnhancement
--> done: CommonSteps.GivenUserUsesTestDataWithIDFromSheet("DE_001", "DataEnhancement") (0.9s)
+[15:38:34 INF] Test data loaded: DE_001 from sheet DataEnhancement
+-> done: CommonSteps.GivenUserUsesTestDataWithIDFromSheet("DE_001", "DataEnhancement") (0.5s)
 Given User is logged in to Dynamics application to work for "E2E_Committed_Amend_DE" case
-[15:19:43 INF] Navigated to: https://voabstsit.crm11.dynamics.com/
-[15:20:32 INF] Legal Notice dismissed — el.click() via JS
-[15:20:32 INF] User is ready in Dynamics 365
-[15:20:32 INF] Logged in for case: E2E_Committed_Amend_DE
--> done: LoginSteps.GivenUserIsLoggedInToDynamicsApplicationToWorkForCase("E2E_Committed_Ame...") (49.3s)
+[15:38:34 INF] Navigated to: https://voabstsit.crm11.dynamics.com/
+[15:39:23 INF] Legal Notice dismissed — el.click() via JS
+[15:39:23 INF] User is ready in Dynamics 365
+[15:39:23 INF] Logged in for case: E2E_Committed_Amend_DE
+-> done: LoginSteps.GivenUserIsLoggedInToDynamicsApplicationToWorkForCase("E2E_Committed_Ame...") (49.2s)
 And User collapse if site map navigation expanded on left pane
 -> done: LoginSteps.GivenUserCollapseIfSiteMapNavigationExpandedOnLeftPane() (0.0s)
 And User connects to the DB and retrieves the data for 'findHereditament_WestLancashire_DE'
   --- table step argument ---
   | fieldName |
   | uprn      |
-[15:20:32 INF] Executing DB query for key: findHereditament_WestLancashire_DE
-[15:20:37 INF] Azure DB access token acquired (length: 4248)
-[15:20:38 INF] DB field 'uprn' = '10012363187'
--> done: DynamicsSteps.GivenUserConnectsToDBAndRetrievesDataFor("findHereditament_...", <table>) (5.6s)
+[15:39:23 INF] Executing DB query for key: findHereditament_WestLancashire_DE
+[15:39:27 INF] Azure DB access token acquired (length: 4248)
+[15:39:27 INF] DB field 'uprn' = '10012366036'
+-> done: DynamicsSteps.GivenUserConnectsToDBAndRetrievesDataFor("findHereditament_...", <table>) (4.2s)
 Given User click on 'Requests' under 'Service' section
--> error: Timeout 360000ms exceeded.
-Call log:
-  -   - waiting for Locator("//li[@data-text='Service']//ul//li[@data-text='Requests'] | //span[text()='Requests']/ancestor::li[@role='treeitem']").First (360.0s)
-[15:26:38 ERR] Screenshot saved: 20260514_152638_569_DE01_CTPRELMGMT-1607_CTPRELMGMT-1635_E2E Data Enhancement - _STEP_FAILED.png
+[15:39:27 INF] Clicked 'Requests' under 'Service'
+-> done: CommonSteps.GivenUserClickOnUnderSection("Requests", "Service") (0.1s)
 And User click on 'New' button from 'menubar'
--> skipped because of previous errors
+-> error: Timeout 360000ms exceeded. (363.1s)
+[15:45:31 ERR] Screenshot saved: 20260514_154531_318_DE01_CTPRELMGMT-1607_CTPRELMGMT-1635_E2E Data Enhancement - _STEP_FAILED.png
 And User looked for 'Job Type' field value
 -> skipped because of previous errors
 And User scroll to 'Billing Authority Link' element
@@ -568,5 +570,5 @@ public void ThenUserClosesBrowser()
     throw new PendingStepException();
 }
 
-[15:26:38 ERR] Screenshot saved: 20260514_152638_912_DE01_CTPRELMGMT-1607_CTPRELMGMT-1635_E2E Data Enhancement - _FAILED.png
-[15:26:39 INF] Browser disposed
+[15:45:31 ERR] Screenshot saved: 20260514_154531_679_DE01_CTPRELMGMT-1607_CTPRELMGMT-1635_E2E Data Enhancement - _FAILED.png
+[15:45:32 INF] Browser disposed
