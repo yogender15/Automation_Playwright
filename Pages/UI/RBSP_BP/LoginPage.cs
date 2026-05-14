@@ -98,15 +98,19 @@ namespace BSTVOAQAAutomation.Playwright.Pages.UI.RBSP_BP
         {
             try
             {
-                await LegalNoticeContinue.WaitForAsync(
-                    new() { State = WaitForSelectorState.Visible, Timeout = 8_000 });
+                // Give Dynamics a moment to render the overlay after the app header appears
+                await _page.WaitForTimeoutAsync(2000);
 
-                // Use JS click (DispatchEvent) — mirrors the old Selenium
-                // ClickUsingJavascript: arguments[0].click()
-                // Required because the modal overlay intercepts pointer events.
-                await LegalNoticeContinue.DispatchEventAsync("click");
-                await _page.WaitForLoadStateAsync(LoadState.DOMContentLoaded);
-                Log.Information("Legal Notice dismissed — JS click on Continue");
+                await LegalNoticeContinue.WaitForAsync(
+                    new() { State = WaitForSelectorState.Visible, Timeout = 10_000 });
+
+                // EvaluateAsync("el => el.click()") is the exact Playwright equivalent of
+                // the old Selenium: IJavaScriptExecutor.ExecuteScript("arguments[0].click()", el)
+                // DispatchEventAsync("click") is NOT the same — it fires a synthetic event
+                // but does not invoke the element's native .click() handler.
+                await LegalNoticeContinue.EvaluateAsync("el => el.click()");
+                await _page.WaitForTimeoutAsync(1500);
+                Log.Information("Legal Notice dismissed — el.click() via JS");
             }
             catch { /* dialog not present — nothing to do */ }
         }

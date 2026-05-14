@@ -59,21 +59,16 @@ namespace BSTVOAQAAutomation.Playwright.Helpers
                 Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
                 "Microsoft", "Edge", "User Data");
 
-            // Detect ServiceProfiles (Azure DevOps build agent).
-            // On agents, --start-maximized has no effect without a display, so use a
-            // fixed viewport instead — mirrors DriverHelper's ServiceProfiles branch.
-            string userId = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)
-                .Split(Path.DirectorySeparatorChar).Last();
-            bool isAgent = userId.Equals("ServiceProfiles", StringComparison.OrdinalIgnoreCase);
-
             var options = new BrowserTypeLaunchPersistentContextOptions
             {
                 Headless          = headless,
                 Channel           = "msedge",
-                // null + --start-maximized for local runs; fixed viewport on CI agent
-                ViewportSize      = isAgent
-                    ? new ViewportSize { Width = 1920, Height = 1080 }
-                    : null,
+                // A fixed viewport ensures the page content fills the window fully.
+                // ViewportSize=null + --start-maximized with a persistent context causes the
+                // right side of the browser to stay black because Edge restores the saved window
+                // size from the profile, which may be smaller than the maximized dimensions.
+                // 1920x1080 matches the standard HMRC VM resolution.
+                ViewportSize      = new ViewportSize { Width = 1920, Height = 1080 },
                 IgnoreHTTPSErrors = true,
                 // Do NOT add --disable-extensions: kills Edge's built-in AAD SSO extension.
                 // Matches DriverHelper edge args:
