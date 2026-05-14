@@ -1,0 +1,622 @@
+ DE01_CTPRELMGMT_1607_CTPRELMGMT_1635_E2EDataEnhancement_FullProcessOfAmendingACommittedPADSet
+   Source: DataEnhancement.feature line 10
+   Duration: 28.8 sec
+
+  Message: 
+System.ArgumentException : The path is empty. (Parameter 'path')
+
+  Stack Trace: 
+Path.GetFullPath(String path)
+FileInfo.ctor(String originalPath, String fullPath, String fileName, Boolean isNormalized)
+FileInfo.ctor(String fileName)
+ExcelTestDataUtility.GetTestDataByID(String sheetName, String testCaseID) line 18
+CommonSteps.GivenUserUsesTestDataWithIDFromSheet(String testCaseID, String sheetName) line 27
+RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+--- End of stack trace from previous location ---
+BindingInvoker.InvokeBindingAsync(IBinding binding, IContextManager contextManager, Object[] arguments, ITestTracer testTracer, DurationHolder durationHolder)
+TestExecutionEngine.ExecuteStepMatchAsync(BindingMatch match, Object[] arguments, DurationHolder durationHolder)
+TestExecutionEngine.ExecuteStepMatchAsync(BindingMatch match, Object[] arguments, DurationHolder durationHolder)
+<<ExecuteStepAsync>b__7>d.MoveNext()
+--- End of stack trace from previous location ---
+<<ExecuteStepAsync>g__HandleStepExecutionExceptions|0>d.MoveNext()
+TestExecutionEngine.OnAfterLastStepAsync()
+TestRunner.CollectScenarioErrorsAsync()
+DataEnhancementFeature.ScenarioCleanupAsync()
+DataEnhancementFeature.DE01_CTPRELMGMT_1607_CTPRELMGMT_1635_E2EDataEnhancement_FullProcessOfAmendingACommittedPADSet() line 121
+GenericAdapter`1.BlockUntilCompleted()
+NoMessagePumpStrategy.WaitForCompletion(AwaitAdapter awaiter)
+AsyncToSyncAdapter.Await[TResult](Func`1 invoke)
+AsyncToSyncAdapter.Await(Func`1 invoke)
+TestMethodCommand.RunTestMethod(TestExecutionContext context)
+TestMethodCommand.Execute(TestExecutionContext context)
+<>c__DisplayClass1_0.<Execute>b__0()
+DelegatingTestCommand.RunTestMethodInThreadAbortSafeZone(TestExecutionContext context, Action action)
+
+  Standard Output: 
+[11:02:34 INF] Browser started for scenario: DE01_CTPRELMGMT-1607_CTPRELMGMT-1635_E2E Data Enhancement - Full process of Amending a Committed PAD set
+Given User uses test data with ID 'DE_001' from 'DataEnhancement' sheet
+-> error: The path is empty. (Parameter 'path') (0.0s)
+Given User is logged in to Dynamics application to work for "E2E_Committed_Amend_DE" case
+-> skipped because of previous errors
+And User collapse if site map navigation expanded on left pane
+-> skipped because of previous errors
+And User connects to the DB and retrieves the data for 'findHereditament_WestLancashire_DE'
+  --- table step argument ---
+  | fieldName |
+  | uprn      |
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Given("User connects to the DB and retrieves the data for {string}")]
+public void GivenUserConnectsToTheDBAndRetrievesTheDataFor(string p0, DataTable dataTable)
+{
+    throw new PendingStepException();
+}
+
+Given User click on 'Requests' under 'Service' section
+-> skipped because of previous errors
+And User click on 'New' button from 'menubar'
+-> skipped because of previous errors
+And User looked for 'Job Type' field value
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Given("User looked for {string} field value")]
+public void GivenUserLookedForFieldValue(string p0)
+{
+    throw new PendingStepException();
+}
+
+And User scroll to 'Billing Authority Link' element
+-> skipped because of previous errors
+And User entered 0 days before date for 'Date Received' field value
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Given("User entered {int} days before date for {string} field value")]
+public void GivenUserEnteredDaysBeforeDateForFieldValue(int p0, string p1)
+{
+    throw new PendingStepException();
+}
+
+And User entered 25 days after date for 'Target Date' field value
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Given("User entered {int} days after date for {string} field value")]
+public void GivenUserEnteredDaysAfterDateForFieldValue(int p0, string p1)
+{
+    throw new PendingStepException();
+}
+
+And User enter data for 'Remarks' text area field value
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Given("User enter data for {string} text area field value")]
+public void GivenUserEnterDataForTextAreaFieldValue(string remarks)
+{
+    throw new PendingStepException();
+}
+
+And User click on 'Find Hereditament' button
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Given("User click on {string} button")]
+public void GivenUserClickOnButton(string p0)
+{
+    throw new PendingStepException();
+}
+
+And User select 'UPRN' value from 'Search By' dropdown
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Given("User select {string} value from {string} dropdown")]
+public void GivenUserSelectValueFromDropdown(string uPRN, string p1)
+{
+    throw new PendingStepException();
+}
+
+And User enters data in "UPRN" field
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Given("User enters data in {string} field")]
+public void GivenUserEntersDataInField(string uPRN0)
+{
+    throw new PendingStepException();
+}
+
+And User clicked on 'Search' button
+-> skipped because of previous errors
+And User slects spcific 'uprn' row from search hereditament results
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Given("User slects spcific {string} row from search hereditament results")]
+public void GivenUserSlectsSpcificRowFromSearchHereditamentResults(string uprn)
+{
+    throw new PendingStepException();
+}
+
+And User clicked on 'Select' button
+-> skipped because of previous errors
+And User waits till Find Hereditament dialog disappears
+-> skipped because of previous errors
+And User click on 'Save' button from 'menubar'
+-> binding error: Ambiguous step definitions found for step 'Given User click on 'Save' button from 'menubar'': BSTVOAQAAutomation_Playwright:BSTVOAQAAutomation.Playwright.Steps.UI.CommonSteps.GivenUserClickOnButtonFromMenubar(String), BSTVOAQAAutomation_Playwright:BSTVOAQAAutomation.Playwright.Steps.UI.CommonSteps.GivenUserClickOnSaveButtonFromMenubar()
+And user waits till 'Saving...' 'progressbar' disappears
+-> skipped because of previous errors
+Then User validate 'Validating' status of 'Request'
+-> skipped because of previous errors
+And User clicks on 'Validate Request' under 'Request Action'
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Then("User clicks on {string} under {string}")]
+public void ThenUserClicksOnUnder(string p0, string p1)
+{
+    throw new PendingStepException();
+}
+
+And User click on 'Save & Close' button from 'dialog'
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Then("User click on {string} button from {string}")]
+public void ThenUserClickOnButtonFrom(string p0, string dialog)
+{
+    throw new PendingStepException();
+}
+
+And User waits till 'dialog' disappears
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Then("User waits till {string} disappears")]
+public void ThenUserWaitsTillDisappears(string dialog0)
+{
+    throw new PendingStepException();
+}
+
+And User click on 'Related Jobs' tab from 'Request Form'
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Then("User click on {string} tab from {string}")]
+public void ThenUserClickOnTabFrom(string p0, string p1)
+{
+    throw new PendingStepException();
+}
+
+And User captures "Job ID" and "Job Name" in "scenarioContext" by "Refresh" grid
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Then("User captures {string} and {string} in {string} by {string} grid")]
+public void ThenUserCapturesAndInByGrid(string p0, string p1, string scenarioContext, string refresh)
+{
+    throw new PendingStepException();
+}
+
+And User click on "Job Id" element
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Then("User click on {string} element")]
+public void ThenUserClickOnElement(string p0)
+{
+    throw new PendingStepException();
+}
+
+And User waits till 'Details' stage selected
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Then("User waits till {string} stage selected")]
+public void ThenUserWaitsTillStageSelected(string details)
+{
+    throw new PendingStepException();
+}
+
+And User click on 'Refresh' button from 'menubar'
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Then("User click on {string} button from {string}")]
+public void ThenUserClickOnButtonFrom(string refresh0, string menubar)
+{
+    throw new PendingStepException();
+}
+
+Then User validate below business stages on business journey header
+  --- table step argument ---
+  | BusinessStages |
+  | Details        |
+  | Researching    |
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Then("User validate below business stages on business journey header")]
+public void ThenUserValidateBelowBusinessStagesOnBusinessJourneyHeader(DataTable dataTable)
+{
+    throw new PendingStepException();
+}
+
+And User clicked on 'Next Stage' for 'Details' journey on the headerbar
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Then("User clicked on {string} for {string} journey on the headerbar")]
+public void ThenUserClickedOnForJourneyOnTheHeaderbar(string p0, string details1)
+{
+    throw new PendingStepException();
+}
+
+And User waits till 'Researching' stage selected
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Then("User waits till {string} stage selected")]
+public void ThenUserWaitsTillStageSelected(string researching)
+{
+    throw new PendingStepException();
+}
+
+And User clicked on 'PVT' tab under 'Desktop Research Form'
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Then("User clicked on {string} tab under {string}")]
+public void ThenUserClickedOnTabUnder(string pVT, string p1)
+{
+    throw new PendingStepException();
+}
+
+And User selects 'Committed' record
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Then("User selects {string} record")]
+public void ThenUserSelectsRecord(string committed)
+{
+    throw new PendingStepException();
+}
+
+And User get PAD attributes of 'Committed' record
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Then("User get PAD attributes of {string} record")]
+public void ThenUserGetPADAttributesOfRecord(string committed0)
+{
+    throw new PendingStepException();
+}
+
+And User captures "EffectiveFromDate" for "committed" record in "scenarioContext"
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Then("User captures {string} for {string} record in {string}")]
+public void ThenUserCapturesForRecordIn(string effectiveFromDate, string committed1, string scenarioContext2)
+{
+    throw new PendingStepException();
+}
+
+And User clicked on 'Amend' button
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Then("User clicked on {string} button")]
+public void ThenUserClickedOnButton(string amend)
+{
+    throw new PendingStepException();
+}
+
+And User clicks on 'Continue' button on 'Clone and Amend PADs?' dialog
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Then("User clicks on {string} button on {string} dialog")]
+public void ThenUserClicksOnButtonOnDialog(string @continue, string p1)
+{
+    throw new PendingStepException();
+}
+
+And user waits till app progress indicator disappears
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Then("user waits till app progress indicator disappears")]
+public void ThenUserWaitsTillAppProgressIndicatorDisappears()
+{
+    throw new PendingStepException();
+}
+
+And User clicks on 'Save and continue' button on 'Unsaved changes' dialog,if appears
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Then("User clicks on {string} button on {string} dialog,if appears")]
+public void ThenUserClicksOnButtonOnDialogIfAppears(string p0, string p1)
+{
+    throw new PendingStepException();
+}
+
+And user waits till app progress indicator disappears
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Then("user waits till app progress indicator disappears")]
+public void ThenUserWaitsTillAppProgressIndicatorDisappears()
+{
+    throw new PendingStepException();
+}
+
+And User clicked on 'PAD Entry' tab under 'Desktop Research Form'
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Then("User clicked on {string} tab under {string}")]
+public void ThenUserClickedOnTabUnder(string p0, string p1)
+{
+    throw new PendingStepException();
+}
+
+And User enter Property Attributes
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Then("User enter Property Attributes")]
+public void ThenUserEnterPropertyAttributes()
+{
+    throw new PendingStepException();
+}
+
+And User enter data for 'Floors' field value only when data not entered
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Then("User enter data for {string} field value only when data not entered")]
+public void ThenUserEnterDataForFieldValueOnlyWhenDataNotEntered(string floors)
+{
+    throw new PendingStepException();
+}
+
+And User enter data for 'Level' field value only when data not entered
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Then("User enter data for {string} field value only when data not entered")]
+public void ThenUserEnterDataForFieldValueOnlyWhenDataNotEntered(string level)
+{
+    throw new PendingStepException();
+}
+
+And User looked for 'Conservatory Type' field value only when data not entered
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Then("User looked for {string} field value only when data not entered")]
+public void ThenUserLookedForFieldValueOnlyWhenDataNotEntered(string p0)
+{
+    throw new PendingStepException();
+}
+
+And User enter data for 'Conservatory Area' field value only when data not entered
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Then("User enter data for {string} field value only when data not entered")]
+public void ThenUserEnterDataForFieldValueOnlyWhenDataNotEntered(string p0)
+{
+    throw new PendingStepException();
+}
+
+And User click on 'Save' button from 'menubar'
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Then("User click on {string} button from {string}")]
+public void ThenUserClickOnButtonFrom(string save, string menubar1)
+{
+    throw new PendingStepException();
+}
+
+And user waits till 'Saving...' 'progressbar' disappears
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Then("user waits till {string} {string} disappears")]
+public void ThenUserWaitsTillDisappears(string p0, string progressbar)
+{
+    throw new PendingStepException();
+}
+
+And User clicked on 'Add New Source Code' button
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Then("User clicked on {string} button")]
+public void ThenUserClickedOnButton(string p0)
+{
+    throw new PendingStepException();
+}
+
+And User looked for 'Source Code' field value
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Then("User looked for {string} field value")]
+public void ThenUserLookedForFieldValue(string p0)
+{
+    throw new PendingStepException();
+}
+
+And User enter data for 'Comment' field value
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Then("User enter data for {string} field value")]
+public void ThenUserEnterDataForFieldValue(string comment)
+{
+    throw new PendingStepException();
+}
+
+And User click on 'Save & Close' button from 'menubar'
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Then("User click on {string} button from {string}")]
+public void ThenUserClickOnButtonFrom(string p0, string menubar1)
+{
+    throw new PendingStepException();
+}
+
+And User scroll to 'PAD Validation' element
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Then("User scroll to {string} element")]
+public void ThenUserScrollToElement(string p0)
+{
+    throw new PendingStepException();
+}
+
+And User click on 'Validate PAD Code' toggle button
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Then("User click on {string} toggle button")]
+public void ThenUserClickOnToggleButton(string p0)
+{
+    throw new PendingStepException();
+}
+
+And User click on 'Save' button from 'menubar'
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Then("User click on {string} button from {string}")]
+public void ThenUserClickOnButtonFrom(string save0, string menubar1)
+{
+    throw new PendingStepException();
+}
+
+And user waits till 'Saving...' 'progressbar' disappears
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Then("user waits till {string} {string} disappears")]
+public void ThenUserWaitsTillDisappears(string p0, string progressbar1)
+{
+    throw new PendingStepException();
+}
+
+Then User validate value 'Pass' for 'PAD Validation Outcome' field
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Then("User validate value {string} for {string} field")]
+public void ThenUserValidateValueForField(string pass, string p1)
+{
+    throw new PendingStepException();
+}
+
+And User click on 'Save' button from 'menubar'
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Then("User click on {string} button from {string}")]
+public void ThenUserClickOnButtonFrom(string save0, string menubar1)
+{
+    throw new PendingStepException();
+}
+
+And user waits till 'Saving...' 'progressbar' disappears
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Then("user waits till {string} {string} disappears")]
+public void ThenUserWaitsTillDisappears(string p0, string progressbar1)
+{
+    throw new PendingStepException();
+}
+
+And User clicked on 'Check Facts' tab under 'Desktop Research Form'
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Then("User clicked on {string} tab under {string}")]
+public void ThenUserClickedOnTabUnder(string p0, string p1)
+{
+    throw new PendingStepException();
+}
+
+And User clicks on 'Is Desktop Research Complete?' dropdown and select 'Yes' value
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Then("User clicks on {string} dropdown and select {string} value")]
+public void ThenUserClicksOnDropdownAndSelectValue(string p0, string yes)
+{
+    throw new PendingStepException();
+}
+
+And User clicks on 'Yes' button on 'Complete Job' dialog
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Then("User clicks on {string} button on {string} dialog")]
+public void ThenUserClicksOnButtonOnDialog(string yes0, string p1)
+{
+    throw new PendingStepException();
+}
+
+And user waits till progress indicator disappears
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Then("user waits till progress indicator disappears")]
+public void ThenUserWaitsTillProgressIndicatorDisappears()
+{
+    throw new PendingStepException();
+}
+
+And user waits till 'Saving...' 'progressbar' disappears
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Then("user waits till {string} {string} disappears")]
+public void ThenUserWaitsTillDisappears(string p0, string progressbar1)
+{
+    throw new PendingStepException();
+}
+
+And User click on job link in Header
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Then("User click on job link in Header")]
+public void ThenUserClickOnJobLinkInHeader()
+{
+    throw new PendingStepException();
+}
+
+And User click on 'Refresh' button from 'menubar' untill 'Pending Release' status display
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Then("User click on {string} button from {string} untill {string} status display")]
+public void ThenUserClickOnButtonFromUntillStatusDisplay(string refresh0, string menubar1, string p2)
+{
+    throw new PendingStepException();
+}
+
+And User clicked on 'Details' tab under 'Job Form'
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Then("User clicked on {string} tab under {string}")]
+public void ThenUserClickedOnTabUnder(string details0, string p1)
+{
+    throw new PendingStepException();
+}
+
+And User click on 'Request' link
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Then("User click on {string} link")]
+public void ThenUserClickOnLink(string request)
+{
+    throw new PendingStepException();
+}
+
+And User clicks on 'Release and Publish' under 'Request Action'
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Then("User clicks on {string} under {string}")]
+public void ThenUserClicksOnUnder(string p0, string p1)
+{
+    throw new PendingStepException();
+}
+
+And User clicks on 'OK' button element
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Then("User clicks on {string} button element")]
+public void ThenUserClicksOnButtonElement(string oK)
+{
+    throw new PendingStepException();
+}
+
+And User closes dialog if still present
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Then("User closes dialog if still present")]
+public void ThenUserClosesDialogIfStillPresent()
+{
+    throw new PendingStepException();
+}
+
+And User click on 'Refresh' button from 'menubar' untill 'Resolved' status display
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Then("User click on {string} button from {string} untill {string} status display")]
+public void ThenUserClickOnButtonFromUntillStatusDisplay(string refresh0, string menubar1, string resolved)
+{
+    throw new PendingStepException();
+}
+
+And User clicked on 'Details' tab under 'Job Form'
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Then("User clicked on {string} tab under {string}")]
+public void ThenUserClickedOnTabUnder(string details0, string p1)
+{
+    throw new PendingStepException();
+}
+
+And User scroll to 'Hereditament Details' element
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Then("User scroll to {string} element")]
+public void ThenUserScrollToElement(string p0)
+{
+    throw new PendingStepException();
+}
+
+And User click on 'Hereditament' link
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Then("User click on {string} link")]
+public void ThenUserClickOnLink(string hereditament)
+{
+    throw new PendingStepException();
+}
+
+And User clicked on 'PVT' tab under 'Hereditament Form'
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Then("User clicked on {string} tab under {string}")]
+public void ThenUserClickedOnTabUnder(string pVT0, string p1)
+{
+    throw new PendingStepException();
+}
+
+And User clicks on 'Refresh' button on hereditament dialog and asserts 'status' records
+  --- table step argument ---
+  | status     |
+  | Committed  |
+  | Superseded |
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Then("User clicks on {string} button on hereditament dialog and asserts {string} records")]
+public void ThenUserClicksOnButtonOnHereditamentDialogAndAssertsRecords(string refresh0, string status, DataTable dataTable)
+{
+    throw new PendingStepException();
+}
+
+Then user asserts "Effective Date","Effective To" for "Amend" records
+  --- table step argument ---
+  | fromDateColumn    | effectiveToDateColumn | status     |
+  | EffectiveFromDate |                       | Committed  |
+  | EffectiveFromDate | EffectiveFromDate     | Superseded |
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Then("user asserts {string},{string} for {string} records")]
+public void ThenUserAssertsForRecords(string p0, string p1, string amend2, DataTable dataTable)
+{
+    throw new PendingStepException();
+}
+
+And User closes browser
+-> undefined: No matching step definition found for the step. Use the following code to create one:
+        [Then("User closes browser")]
+public void ThenUserClosesBrowser()
+{
+    throw new PendingStepException();
+}
+
+[11:02:34 ERR] Scenario failed — screenshot saved: 20260514_110234_573_FAILED.png
+[11:02:56 INF] Browser disposed
