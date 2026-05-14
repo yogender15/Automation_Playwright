@@ -50,7 +50,6 @@ namespace BSTVOAQAAutomation.Playwright.Steps.UI
         [Given(@"User click on '(.*)' button from 'menubar'")]
         public async Task GivenUserClickOnButtonFromMenubar(string buttonName)
         {
-            // Save and Save & Close handled by dedicated methods below
             if (buttonName.Equals("Save", StringComparison.OrdinalIgnoreCase))
             {
                 await GivenUserClickOnSaveButtonFromMenubar();
@@ -65,17 +64,34 @@ namespace BSTVOAQAAutomation.Playwright.Steps.UI
                 $"button[aria-label='{buttonName}'], " +
                 $"button[data-id*='{buttonName}'], " +
                 $"li[aria-label='{buttonName}']").First;
-            await locator.ClickAsync();
-            await _pw.Page.WaitForLoadStateAsync(LoadState.NetworkIdle);
+            await locator.EvaluateAsync("el => el.click()");
+            // DOMContentLoaded — Dynamics never reaches NetworkIdle due to background requests
+            await _pw.Page.WaitForLoadStateAsync(LoadState.DOMContentLoaded);
             Log.Information("Clicked '{Button}' from menubar", buttonName);
+        }
+
+        // Generic standalone button click — mirrors old ClickUsingJavascript.
+        // Covers steps like: User click on 'Find Hereditament' button
+        [Given(@"User click on '(.*)' button")]
+        public async Task GivenUserClickOnButton(string buttonName)
+        {
+            var locator = _pw.Page.Locator(
+                $"button[aria-label='{buttonName}'], " +
+                $"button:text-is('{buttonName}'), " +
+                $"input[value='{buttonName}']").First;
+            await locator.WaitForAsync(new() { State = WaitForSelectorState.Visible, Timeout = 30_000 });
+            await locator.EvaluateAsync("el => el.click()");
+            Log.Information("Clicked button: {Button}", buttonName);
         }
 
         [Given(@"User clicked on '(.*)' button")]
         [When(@"User clicked on '(.*)' button")]
         public async Task GivenUserClickedOnButton(string buttonName)
         {
-            await _pw.Page.GetByRole(AriaRole.Button, new() { Name = buttonName })
-                          .First.ClickAsync();
+            var locator = _pw.Page.Locator(
+                $"button[aria-label='{buttonName}'], " +
+                $"button:text-is('{buttonName}')").First;
+            await locator.EvaluateAsync("el => el.click()");
             Log.Information("Clicked button: {Button}", buttonName);
         }
 
@@ -83,16 +99,16 @@ namespace BSTVOAQAAutomation.Playwright.Steps.UI
         public async Task GivenUserClickOnButtonFromDialog(string buttonName)
         {
             var dialog = _pw.Page.Locator("[role='dialog']");
-            await dialog.GetByRole(AriaRole.Button, new() { Name = buttonName })
-                        .First.ClickAsync();
+            var btn = dialog.GetByRole(AriaRole.Button, new() { Name = buttonName }).First;
+            await btn.EvaluateAsync("el => el.click()");
             Log.Information("Clicked '{Button}' on dialog", buttonName);
         }
 
         [Given(@"User click on '(.*)' tab from '(.*)'")]
         public async Task GivenUserClickOnTabFrom(string tabName, string formName)
         {
-            await _pw.Page.Locator($"li[title='{tabName}'], [aria-label='{tabName}']")
-                          .First.ClickAsync();
+            var tab = _pw.Page.Locator($"li[title='{tabName}'], [aria-label='{tabName}']").First;
+            await tab.EvaluateAsync("el => el.click()");
             Log.Information("Clicked tab: {Tab}", tabName);
         }
 
@@ -111,7 +127,6 @@ namespace BSTVOAQAAutomation.Playwright.Steps.UI
         [Given(@"user waits till '(.*)' '(.*)' disappears")]
         public async Task GivenUserWaitsTillDisappears(string label, string roleType)
         {
-            // Playwright auto-waits — explicitly wait for the saving indicator to go
             var locator = _pw.Page.Locator(
                 $"[role='{roleType}'][aria-label*='{label}'], " +
                 $"//*[@role='{roleType}' and contains(text(),'{label}')]").First;
@@ -193,7 +208,7 @@ namespace BSTVOAQAAutomation.Playwright.Steps.UI
         public async Task GivenUserClickOnSaveButtonFromMenubar()
         {
             await _pw.Page.Locator("button[aria-label='Save (CTRL+S)'], button[data-id='quickCreateSaveAndCloseBtn']")
-                          .First.ClickAsync();
+                          .First.EvaluateAsync("el => el.click()");
             await GivenUserWaitsTillProgressIndicatorDisappears();
             Log.Information("Saved record");
         }
@@ -201,7 +216,7 @@ namespace BSTVOAQAAutomation.Playwright.Steps.UI
         public async Task GivenUserClickOnSaveAndCloseButton()
         {
             await _pw.Page.Locator("button[aria-label='Save & Close'], button[data-id='saveandclose']")
-                          .First.ClickAsync();
+                          .First.EvaluateAsync("el => el.click()");
             await GivenUserWaitsTillProgressIndicatorDisappears();
             Log.Information("Saved and closed");
         }
@@ -209,8 +224,8 @@ namespace BSTVOAQAAutomation.Playwright.Steps.UI
         [Given(@"User click on 'Refresh' button from 'menubar'")]
         public async Task GivenUserClickOnRefreshButtonFromMenubar()
         {
-            await _pw.Page.Locator("button[aria-label='Refresh']").First.ClickAsync();
-            await _pw.Page.WaitForLoadStateAsync(LoadState.NetworkIdle);
+            await _pw.Page.Locator("button[aria-label='Refresh']").First.EvaluateAsync("el => el.click()");
+            await _pw.Page.WaitForLoadStateAsync(LoadState.DOMContentLoaded);
             Log.Information("Refreshed page");
         }
 
@@ -223,7 +238,7 @@ namespace BSTVOAQAAutomation.Playwright.Steps.UI
                 "button[aria-label='Close'], button[data-id='dialogCloseIconButton']").First;
             if (await closeBtn.IsVisibleAsync())
             {
-                await closeBtn.ClickAsync();
+                await closeBtn.EvaluateAsync("el => el.click()");
                 Log.Information("Closed dialog");
             }
         }
@@ -233,7 +248,8 @@ namespace BSTVOAQAAutomation.Playwright.Steps.UI
         {
             var dialog = _pw.Page.Locator(
                 $"[aria-label='{dialogTitle}'], div[role='dialog']:has-text('{dialogTitle}')").First;
-            await dialog.GetByRole(AriaRole.Button, new() { Name = buttonName }).ClickAsync();
+            var btn = dialog.GetByRole(AriaRole.Button, new() { Name = buttonName });
+            await btn.EvaluateAsync("el => el.click()");
             Log.Information("Clicked '{Button}' on '{Dialog}' dialog", buttonName, dialogTitle);
         }
 
@@ -241,9 +257,9 @@ namespace BSTVOAQAAutomation.Playwright.Steps.UI
         [Given(@"User clicks on 'OK' button element")]
         public async Task GivenUserClicksOnButtonElement(string buttonName)
         {
-            await _pw.Page.GetByRole(AriaRole.Button, new() { Name = buttonName })
-                          .First.ClickAsync();
-            Log.Information("Clicked button: {Button}", buttonName);
+            var btn = _pw.Page.GetByRole(AriaRole.Button, new() { Name = buttonName }).First;
+            await btn.EvaluateAsync("el => el.click()");
+            Log.Information("Clicked button element: {Button}", buttonName);
         }
     }
 }
