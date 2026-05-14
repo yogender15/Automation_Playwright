@@ -100,9 +100,13 @@ namespace BSTVOAQAAutomation.Playwright.Pages.UI.RBSP_BP
             {
                 await LegalNoticeContinue.WaitForAsync(
                     new() { State = WaitForSelectorState.Visible, Timeout = 8_000 });
-                await LegalNoticeContinue.ClickAsync();
+
+                // Use JS click (DispatchEvent) — mirrors the old Selenium
+                // ClickUsingJavascript: arguments[0].click()
+                // Required because the modal overlay intercepts pointer events.
+                await LegalNoticeContinue.DispatchEventAsync("click");
                 await _page.WaitForLoadStateAsync(LoadState.DOMContentLoaded);
-                Log.Information("Legal Notice dismissed — clicked Continue");
+                Log.Information("Legal Notice dismissed — JS click on Continue");
             }
             catch { /* dialog not present — nothing to do */ }
         }
