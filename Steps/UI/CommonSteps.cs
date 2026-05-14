@@ -21,6 +21,8 @@ namespace BSTVOAQAAutomation.Playwright.Steps.UI
         // ── Test Data ────────────────────────────────────────────────────────────
 
         [Given(@"User uses test data with ID '(.*)' from '(.*)' sheet")]
+        [When(@"User uses test data with ID '(.*)' from '(.*)' sheet")]
+        [Then(@"User uses test data with ID '(.*)' from '(.*)' sheet")]
         public void GivenUserUsesTestDataWithIDFromSheet(string testCaseID, string sheetName)
         {
             var excelUtil = new ExcelTestDataUtility(Config.TestDataExcelFilePath);
@@ -32,11 +34,10 @@ namespace BSTVOAQAAutomation.Playwright.Steps.UI
         // ── Navigation ───────────────────────────────────────────────────────────
 
         [Given(@"User click on '(.*)' under '(.*)' section")]
+        [When(@"User click on '(.*)' under '(.*)' section")]
+        [Then(@"User click on '(.*)' under '(.*)' section")]
         public async Task GivenUserClickOnUnderSection(string menuItem, string sectionName)
         {
-            // Selector mirrors old NavigateToMenuItem_new:
-            // ul[aria-label='sectionName'] li[aria-label='menuItem']
-            // Uses JS click (EvaluateAsync) same as old ClickUsingJavascript.
             var locator = _pw.Page.Locator(
                 $"ul[aria-label='{sectionName}'] li[aria-label='{menuItem}'], " +
                 $"[aria-label='{menuItem}'][role='treeitem']").First;
@@ -48,6 +49,8 @@ namespace BSTVOAQAAutomation.Playwright.Steps.UI
         }
 
         [Given(@"User click on '(.*)' button from 'menubar'")]
+        [When(@"User click on '(.*)' button from 'menubar'")]
+        [Then(@"User click on '(.*)' button from 'menubar'")]
         public async Task GivenUserClickOnButtonFromMenubar(string buttonName)
         {
             if (buttonName.Equals("Save", StringComparison.OrdinalIgnoreCase))
@@ -65,14 +68,13 @@ namespace BSTVOAQAAutomation.Playwright.Steps.UI
                 $"button[data-id*='{buttonName}'], " +
                 $"li[aria-label='{buttonName}']").First;
             await locator.EvaluateAsync("el => el.click()");
-            // DOMContentLoaded — Dynamics never reaches NetworkIdle due to background requests
             await _pw.Page.WaitForLoadStateAsync(LoadState.DOMContentLoaded);
             Log.Information("Clicked '{Button}' from menubar", buttonName);
         }
 
-        // Generic standalone button click — mirrors old ClickUsingJavascript.
-        // Covers steps like: User click on 'Find Hereditament' button
         [Given(@"User click on '(.*)' button")]
+        [When(@"User click on '(.*)' button")]
+        [Then(@"User click on '(.*)' button")]
         public async Task GivenUserClickOnButton(string buttonName)
         {
             var locator = _pw.Page.Locator(
@@ -86,6 +88,7 @@ namespace BSTVOAQAAutomation.Playwright.Steps.UI
 
         [Given(@"User clicked on '(.*)' button")]
         [When(@"User clicked on '(.*)' button")]
+        [Then(@"User clicked on '(.*)' button")]
         public async Task GivenUserClickedOnButton(string buttonName)
         {
             var locator = _pw.Page.Locator(
@@ -96,6 +99,8 @@ namespace BSTVOAQAAutomation.Playwright.Steps.UI
         }
 
         [Given(@"User click on '(.*)' button from 'dialog'")]
+        [When(@"User click on '(.*)' button from 'dialog'")]
+        [Then(@"User click on '(.*)' button from 'dialog'")]
         public async Task GivenUserClickOnButtonFromDialog(string buttonName)
         {
             var dialog = _pw.Page.Locator("[role='dialog']");
@@ -105,6 +110,8 @@ namespace BSTVOAQAAutomation.Playwright.Steps.UI
         }
 
         [Given(@"User click on '(.*)' tab from '(.*)'")]
+        [When(@"User click on '(.*)' tab from '(.*)'")]
+        [Then(@"User click on '(.*)' tab from '(.*)'")]
         public async Task GivenUserClickOnTabFrom(string tabName, string formName)
         {
             var tab = _pw.Page.Locator($"li[title='{tabName}'], [aria-label='{tabName}']").First;
@@ -113,6 +120,8 @@ namespace BSTVOAQAAutomation.Playwright.Steps.UI
         }
 
         [Given(@"User scroll to '(.*)' element")]
+        [When(@"User scroll to '(.*)' element")]
+        [Then(@"User scroll to '(.*)' element")]
         public async Task GivenUserScrollToElement(string elementLabel)
         {
             var element = _pw.Page.Locator(
@@ -125,6 +134,8 @@ namespace BSTVOAQAAutomation.Playwright.Steps.UI
         // ── Waits ────────────────────────────────────────────────────────────────
 
         [Given(@"user waits till '(.*)' '(.*)' disappears")]
+        [When(@"user waits till '(.*)' '(.*)' disappears")]
+        [Then(@"user waits till '(.*)' '(.*)' disappears")]
         public async Task GivenUserWaitsTillDisappears(string label, string roleType)
         {
             var locator = _pw.Page.Locator(
@@ -134,13 +145,21 @@ namespace BSTVOAQAAutomation.Playwright.Steps.UI
             {
                 await locator.WaitForAsync(new() { State = WaitForSelectorState.Hidden, Timeout = 60_000 });
             }
-            catch { /* element may never have appeared — that's fine */ }
+            catch { }
         }
 
         [Given(@"user waits till app progress indicator disappears")]
         [Given(@"user waits till progress indicator disappears")]
         [Given(@"user waits till loading spinner disappears")]
         [Given(@"user waits till Spinner disappears")]
+        [When(@"user waits till app progress indicator disappears")]
+        [When(@"user waits till progress indicator disappears")]
+        [When(@"user waits till loading spinner disappears")]
+        [When(@"user waits till Spinner disappears")]
+        [Then(@"user waits till app progress indicator disappears")]
+        [Then(@"user waits till progress indicator disappears")]
+        [Then(@"user waits till loading spinner disappears")]
+        [Then(@"user waits till Spinner disappears")]
         public async Task GivenUserWaitsTillProgressIndicatorDisappears()
         {
             var indicators = new[]
@@ -162,6 +181,8 @@ namespace BSTVOAQAAutomation.Playwright.Steps.UI
         }
 
         [Given(@"User waits till '(.*)' disappears")]
+        [When(@"User waits till '(.*)' disappears")]
+        [Then(@"User waits till '(.*)' disappears")]
         public async Task GivenUserWaitsTillDisappears(string roleType)
         {
             try
@@ -174,6 +195,10 @@ namespace BSTVOAQAAutomation.Playwright.Steps.UI
 
         [Given(@"user waits till Find Hereditament dialog disappears")]
         [Given(@"User waits till Find Hereditament dialog disappears")]
+        [When(@"user waits till Find Hereditament dialog disappears")]
+        [When(@"User waits till Find Hereditament dialog disappears")]
+        [Then(@"user waits till Find Hereditament dialog disappears")]
+        [Then(@"User waits till Find Hereditament dialog disappears")]
         public async Task GivenUserWaitsTillFindHereditamentDialogDisappears()
         {
             try
@@ -226,6 +251,8 @@ namespace BSTVOAQAAutomation.Playwright.Steps.UI
         }
 
         [Given(@"User click on 'Refresh' button from 'menubar'")]
+        [When(@"User click on 'Refresh' button from 'menubar'")]
+        [Then(@"User click on 'Refresh' button from 'menubar'")]
         public async Task GivenUserClickOnRefreshButtonFromMenubar()
         {
             await _pw.Page.Locator("button[aria-label='Refresh']").First.EvaluateAsync("el => el.click()");
@@ -236,6 +263,8 @@ namespace BSTVOAQAAutomation.Playwright.Steps.UI
         // ── Dialog handling ──────────────────────────────────────────────────────
 
         [Given(@"User closes dialog if still present")]
+        [When(@"User closes dialog if still present")]
+        [Then(@"User closes dialog if still present")]
         public async Task GivenUserClosesDialogIfStillPresent()
         {
             var closeBtn = _pw.Page.Locator(
@@ -248,6 +277,8 @@ namespace BSTVOAQAAutomation.Playwright.Steps.UI
         }
 
         [Given(@"User clicks on '(.*)' button on '(.*)' dialog")]
+        [When(@"User clicks on '(.*)' button on '(.*)' dialog")]
+        [Then(@"User clicks on '(.*)' button on '(.*)' dialog")]
         public async Task GivenUserClicksOnButtonOnDialog(string buttonName, string dialogTitle)
         {
             var dialog = _pw.Page.Locator(
@@ -259,6 +290,10 @@ namespace BSTVOAQAAutomation.Playwright.Steps.UI
 
         [Given(@"User clicks on '(.*)' button element")]
         [Given(@"User clicks on 'OK' button element")]
+        [When(@"User clicks on '(.*)' button element")]
+        [When(@"User clicks on 'OK' button element")]
+        [Then(@"User clicks on '(.*)' button element")]
+        [Then(@"User clicks on 'OK' button element")]
         public async Task GivenUserClicksOnButtonElement(string buttonName)
         {
             var btn = _pw.Page.GetByRole(AriaRole.Button, new() { Name = buttonName }).First;
