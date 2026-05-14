@@ -1,0 +1,50 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <IsTestProject>true</IsTestProject>
+    <RootNamespace>BSTVOAQAAutomation.Playwright</RootNamespace>
+    <AssemblyName>BSTVOAQAAutomation_Playwright</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Browser automation -->
+    <PackageReference Include="Microsoft.Playwright" Version="1.49.0" />
+
+    <!-- BDD -->
+    <PackageReference Include="Reqnroll" Version="3.0.1" />
+    <PackageReference Include="Reqnroll.NUnit" Version="3.0.1" />
+
+    <!-- Test framework -->
+    <PackageReference Include="NUnit" Version="4.2.2" />
+    <PackageReference Include="NUnit3TestAdapter" Version="4.6.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
+
+    <!-- Logging -->
+    <PackageReference Include="Serilog" Version="4.3.0" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
+    <PackageReference Include="Serilog.Sinks.File" Version="6.0.0" />
+
+    <!-- Test data -->
+    <PackageReference Include="EPPlus" Version="4.5.3.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+
+    <!-- Database -->
+    <PackageReference Include="Npgsql" Version="8.0.2" />
+
+    <!-- REST -->
+    <PackageReference Include="RestSharp" Version="112.0.0" />
+
+    <!-- Configuration -->
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="app.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>
