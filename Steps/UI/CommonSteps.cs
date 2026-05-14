@@ -45,6 +45,17 @@ namespace BSTVOAQAAutomation.Playwright.Steps.UI
         [Given(@"User click on '(.*)' button from 'menubar'")]
         public async Task GivenUserClickOnButtonFromMenubar(string buttonName)
         {
+            // Save and Save & Close handled by dedicated methods below
+            if (buttonName.Equals("Save", StringComparison.OrdinalIgnoreCase))
+            {
+                await GivenUserClickOnSaveButtonFromMenubar();
+                return;
+            }
+            if (buttonName.Equals("Save & Close", StringComparison.OrdinalIgnoreCase))
+            {
+                await GivenUserClickOnSaveAndCloseButton();
+                return;
+            }
             var locator = _pw.Page.Locator(
                 $"button[aria-label='{buttonName}'], " +
                 $"button[data-id*='{buttonName}'], " +
@@ -174,7 +185,6 @@ namespace BSTVOAQAAutomation.Playwright.Steps.UI
 
         // ── Save / Refresh ───────────────────────────────────────────────────────
 
-        [Given(@"User click on 'Save' button from 'menubar'")]
         public async Task GivenUserClickOnSaveButtonFromMenubar()
         {
             await _pw.Page.Locator("button[aria-label='Save (CTRL+S)'], button[data-id='quickCreateSaveAndCloseBtn']")
@@ -183,8 +193,6 @@ namespace BSTVOAQAAutomation.Playwright.Steps.UI
             Log.Information("Saved record");
         }
 
-        [Given(@"User click on 'Save & Close' button from 'menubar'")]
-        [Given(@"User click on 'Save & Close' button from 'dialog'")]
         public async Task GivenUserClickOnSaveAndCloseButton()
         {
             await _pw.Page.Locator("button[aria-label='Save & Close'], button[data-id='saveandclose']")
