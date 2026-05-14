@@ -1,17 +1,17 @@
  DE01_CTPRELMGMT_1607_CTPRELMGMT_1635_E2EDataEnhancement_FullProcessOfAmendingACommittedPADSet
    Source: DataEnhancement.feature line 10
-   Duration: 48 sec
+   Duration: 43.3 sec
 
   Message: 
 System.TimeoutException : Timeout 30000ms exceeded.
-Call log:
-  -   - waiting for Locator("input[value='Sign in'], button:has-text('Sign in')")
+  ----> System.TimeoutException : Timeout 30000ms exceeded.
 
   Stack Trace: 
-Connection.InnerSendMessageToServerAsync[T](ChannelOwner object, String method, Dictionary`2 dictionary, Boolean keepNulls)
-Connection.WrapApiCallAsync[T](Func`1 action, Boolean isInternal)
-LoginPage.LoginWithExistingUserAsync() line 35
-LoginPage.LoginAsync(String baseUrl) line 48
+Waiter.WaitForPromiseAsync[T](Task`1 task, Action dispose)
+Frame.WaitForLoadStateAsync(Nullable`1 state, FrameWaitForLoadStateOptions options)
+BasePage.WaitForPageReadyAsync() line 35
+LoginPage.GoToLoginPageAsync(String baseUrl) line 22
+LoginPage.LoginAsync(String baseUrl) line 71
 LoginSteps.GivenUserIsLoggedInToDynamicsApplicationToWorkForCase(String caseName) line 25
 AsyncMethodHelper.ConvertTaskOfT(Task task, Boolean getValue)
 BindingDelegateInvoker.InvokeDelegateAsync(Delegate bindingDelegate, Object[] invokeArgs, ExecutionContextHolder executionContext)
@@ -33,17 +33,18 @@ TestMethodCommand.RunTestMethod(TestExecutionContext context)
 TestMethodCommand.Execute(TestExecutionContext context)
 <>c__DisplayClass1_0.<Execute>b__0()
 DelegatingTestCommand.RunTestMethodInThreadAbortSafeZone(TestExecutionContext context, Action action)
+--TimeoutException
+<>c__DisplayClass2_0.<WithTimeout>b__0()
+TaskHelper.WithTimeout(Task task, Func`1 timeoutAction, TimeSpan timeout, CancellationToken cancellationToken)
+Waiter.WaitForPromiseAsync[T](Task`1 task, Action dispose)
 
   Standard Output: 
-[13:55:38 INF] Browser started for scenario: DE01_CTPRELMGMT-1607_CTPRELMGMT-1635_E2E Data Enhancement - Full process of Amending a Committed PAD set
+[14:20:20 INF] Browser started for scenario: DE01_CTPRELMGMT-1607_CTPRELMGMT-1635_E2E Data Enhancement - Full process of Amending a Committed PAD set
 Given User uses test data with ID 'DE_001' from 'DataEnhancement' sheet
-[13:55:39 INF] Test data loaded: DE_001 from sheet DataEnhancement
--> done: CommonSteps.GivenUserUsesTestDataWithIDFromSheet("DE_001", "DataEnhancement") (0.8s)
+[14:20:21 INF] Test data loaded: DE_001 from sheet DataEnhancement
+-> done: CommonSteps.GivenUserUsesTestDataWithIDFromSheet("DE_001", "DataEnhancement") (0.6s)
 Given User is logged in to Dynamics application to work for "E2E_Committed_Amend_DE" case
-[13:55:41 INF] Navigated to: https://voabstsit.crm11.dynamics.com/
--> error: Timeout 30000ms exceeded.
-Call log:
-  -   - waiting for Locator("input[value='Sign in'], button:has-text('Sign in')") (32.6s)
+-> error: Timeout 30000ms exceeded. (31.2s)
 And User collapse if site map navigation expanded on left pane
 -> skipped because of previous errors
 And User connects to the DB and retrieves the data for 'findHereditament_WestLancashire_DE'
@@ -563,5 +564,5 @@ public void ThenUserClosesBrowser()
     throw new PendingStepException();
 }
 
-[13:56:12 ERR] Scenario failed — screenshot saved: 20260514_135612_353_FAILED.png
-[13:56:23 INF] Browser disposed
+[14:20:52 ERR] Scenario failed — screenshot saved: 20260514_142052_561_FAILED.png
+[14:21:00 INF] Browser disposed
