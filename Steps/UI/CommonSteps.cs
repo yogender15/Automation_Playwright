@@ -48,10 +48,37 @@ namespace BSTVOAQAAutomation.Playwright.Steps.UI
             Log.Information("Clicked '{Item}' under '{Section}'", menuItem, sectionName);
         }
 
-        [Given(@"User click on '(.*)' button from 'menubar'")]
-        [When(@"User click on '(.*)' button from 'menubar'")]
-        [Then(@"User click on '(.*)' button from 'menubar'")]
-        public async Task GivenUserClickOnButtonFromMenubar(string buttonName)
+        // Generic: handles 'menubar', 'dialog', or any other 'from' qualifier
+        [Given(@"User click on '(.*)' button from '(.*)'")]
+        [When(@"User click on '(.*)' button from '(.*)'")]
+        [Then(@"User click on '(.*)' button from '(.*)'")]
+        public async Task GivenUserClickOnButtonFrom(string buttonName, string context)
+        {
+            if (context.Equals("menubar", StringComparison.OrdinalIgnoreCase))
+            {
+                await GivenUserClickOnButtonFromMenubar(buttonName);
+                return;
+            }
+
+            if (context.Equals("dialog", StringComparison.OrdinalIgnoreCase))
+            {
+                var dialog = _pw.Page.Locator("[role='dialog']");
+                var dialogBtn = dialog.GetByRole(AriaRole.Button, new() { Name = buttonName }).First;
+                await dialogBtn.EvaluateAsync("el => el.click()");
+                Log.Information("Clicked '{Button}' on dialog", buttonName);
+                return;
+            }
+
+            // Fallback for any other context (e.g. 'form', 'panel', etc.)
+            var btn = _pw.Page.Locator(
+                $"button[aria-label='{buttonName}'], " +
+                $"button:text-is('{buttonName}')").First;
+            await btn.EvaluateAsync("el => el.click()");
+            Log.Information("Clicked '{Button}' from '{Context}'", buttonName, context);
+        }
+
+        // Internal helper — called by GivenUserClickOnButtonFrom when context = 'menubar'
+        private async Task GivenUserClickOnButtonFromMenubar(string buttonName)
         {
             if (buttonName.Equals("Save", StringComparison.OrdinalIgnoreCase))
             {
@@ -98,18 +125,7 @@ namespace BSTVOAQAAutomation.Playwright.Steps.UI
             Log.Information("Clicked button: {Button}", buttonName);
         }
 
-        [Given(@"User click on '(.*)' button from 'dialog'")]
-        [When(@"User click on '(.*)' button from 'dialog'")]
-        [Then(@"User click on '(.*)' button from 'dialog'")]
-        public async Task GivenUserClickOnButtonFromDialog(string buttonName)
-        {
-            var dialog = _pw.Page.Locator("[role='dialog']");
-            var btn = dialog.GetByRole(AriaRole.Button, new() { Name = buttonName }).First;
-            await btn.EvaluateAsync("el => el.click()");
-            Log.Information("Clicked '{Button}' on dialog", buttonName);
-        }
-
-        [Given(@"User click on '(.*)' tab from '(.*)'")]
+[Given(@"User click on '(.*)' tab from '(.*)'")]
         [When(@"User click on '(.*)' tab from '(.*)'")]
         [Then(@"User click on '(.*)' tab from '(.*)'")]
         public async Task GivenUserClickOnTabFrom(string tabName, string formName)
