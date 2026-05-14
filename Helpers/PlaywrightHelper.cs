@@ -13,19 +13,26 @@ namespace BSTVOAQAAutomation.Playwright.Helpers
         {
             _playwright = await Microsoft.Playwright.Playwright.CreateAsync();
 
-            // Use the user's existing Edge profile so Windows SSO works automatically —
-            // same behaviour as the existing Selenium framework which also used the live profile.
+            // LaunchPersistentContextAsync expects the User Data directory (NOT the Default
+            // profile subfolder). Playwright appends \Default internally. Passing the wrong
+            // path creates an empty nested profile with no SSO cookies.
             var userDataDir = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                "Microsoft", "Edge", "User Data", "Default");
+                "Microsoft", "Edge", "User Data");
 
             var options = new BrowserTypeLaunchPersistentContextOptions
             {
-                Headless   = headless,
-                Channel    = "msedge",
-                ViewportSize = new ViewportSize { Width = 1920, Height = 1080 },
+                Headless          = headless,
+                Channel           = "msedge",
+                ViewportSize      = new ViewportSize { Width = 1920, Height = 1080 },
                 IgnoreHTTPSErrors = true,
-                Args = new[] { "--disable-extensions", "--no-first-run" }
+                // Do NOT add --disable-extensions: it kills Edge's built-in AAD SSO extension.
+                Args = new[]
+                {
+                    "--no-first-run",
+                    "--disable-features=ChromeWhatsNew",
+                    "--disable-session-crashed-bubble"
+                }
             };
 
             _context = await _playwright.Chromium.LaunchPersistentContextAsync(

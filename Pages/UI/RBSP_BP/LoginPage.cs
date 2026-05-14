@@ -25,19 +25,43 @@ namespace BSTVOAQAAutomation.Playwright.Pages.UI.RBSP_BP
 
         public async Task LoginWithExistingUserAsync()
         {
-            // Microsoft SSO — already authenticated via Windows session
-            // If login page appears, enter credentials from Config
+            // On HMRC VMs the Edge profile already holds an active Azure AD session,
+            // so Dynamics loads without any interaction. Wait up to 45 s for SSO to
+            // complete before falling back to manual steps.
+            try
+            {
+                await AppTitle.WaitForAsync(new() { Timeout = 45_000 });
+                Log.Information("Dynamics 365 loaded via Windows SSO — no login needed");
+                return;
+            }
+            catch { /* SSO did not complete — login page appeared */ }
+
+            // Login page visible: try to sign in.
+            // Note: Username/Password are set to Azure DevOps pipeline vars on CI.
+            // For local runs the HMRC VM Windows SSO path above should have succeeded.
             if (await EmailField.IsVisibleAsync())
             {
                 await EmailField.FillAsync(Config.Username);
                 await NextButton.ClickAsync();
-                await PasswordField.FillAsync(Config.Password);
-                await SignInButton.ClickAsync();
 
-                if (await StaySignedInNo.IsVisibleAsync())
-                    await StaySignedInNo.ClickAsync();
+                // Wait for password field — it may not appear if AAD picks up SSO mid-flow
+                try
+                {
+                    await PasswordField.WaitForAsync(new() { Timeout = 15_000 });
+                    await PasswordField.FillAsync(Config.Password);
+                    await SignInButton.ClickAsync();
+                }
+                catch { /* AAD completed SSO after email step — no password needed */ }
+
+                try
+                {
+                    if (await StaySignedInNo.IsVisibleAsync())
+                        await StaySignedInNo.ClickAsync();
+                }
+                catch { }
             }
 
+            // Final wait for Dynamics dashboard
             await AppTitle.WaitForAsync(new() { Timeout = 60_000 });
             Log.Information("User landed in Dynamics 365 dashboard");
         }

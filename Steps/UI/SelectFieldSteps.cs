@@ -87,7 +87,7 @@ namespace BSTVOAQAAutomation.Playwright.Steps.UI
         {
             // First try a <select> element (option-set in Dynamics)
             var selectEl = _pw.Page.Locator($"select[aria-label='{fieldName}'], select[aria-label*='{fieldName}']").First;
-            if (await selectEl.IsVisibleAsync(new() { Timeout = 2000 }))
+            if (await selectEl.IsVisibleAsync())
             {
                 await selectEl.SelectOptionAsync(new SelectOptionValue { Label = value });
                 Log.Information("Selected '{Value}' from select '{Field}'", value, fieldName);
