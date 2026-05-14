@@ -1,6 +1,6 @@
  DE01_CTPRELMGMT_1607_CTPRELMGMT_1635_E2EDataEnhancement_FullProcessOfAmendingACommittedPADSet
    Source: DataEnhancement.feature line 10
-   Duration: 36.4 sec
+   Duration: 48 sec
 
   Message: 
 System.TimeoutException : Timeout 30000ms exceeded.
@@ -35,66 +35,36 @@ TestMethodCommand.Execute(TestExecutionContext context)
 DelegatingTestCommand.RunTestMethodInThreadAbortSafeZone(TestExecutionContext context, Action action)
 
   Standard Output: 
-[12:05:17 INF] Browser started for scenario: DE01_CTPRELMGMT-1607_CTPRELMGMT-1635_E2E Data Enhancement - Full process of Amending a Committed PAD set
+[13:55:38 INF] Browser started for scenario: DE01_CTPRELMGMT-1607_CTPRELMGMT-1635_E2E Data Enhancement - Full process of Amending a Committed PAD set
 Given User uses test data with ID 'DE_001' from 'DataEnhancement' sheet
-[12:05:18 INF] Test data loaded: DE_001 from sheet DataEnhancement
+[13:55:39 INF] Test data loaded: DE_001 from sheet DataEnhancement
 -> done: CommonSteps.GivenUserUsesTestDataWithIDFromSheet("DE_001", "DataEnhancement") (0.8s)
 Given User is logged in to Dynamics application to work for "E2E_Committed_Amend_DE" case
-[12:05:19 INF] Navigated to: https://voabstsit.crm11.dynamics.com/
+[13:55:41 INF] Navigated to: https://voabstsit.crm11.dynamics.com/
 -> error: Timeout 30000ms exceeded.
 Call log:
-  -   - waiting for Locator("input[value='Sign in'], button:has-text('Sign in')") (31.5s)
+  -   - waiting for Locator("input[value='Sign in'], button:has-text('Sign in')") (32.6s)
 And User collapse if site map navigation expanded on left pane
 -> skipped because of previous errors
 And User connects to the DB and retrieves the data for 'findHereditament_WestLancashire_DE'
   --- table step argument ---
   | fieldName |
   | uprn      |
--> undefined: No matching step definition found for the step. Use the following code to create one:
-        [Given("User connects to the DB and retrieves the data for {string}")]
-public void GivenUserConnectsToTheDBAndRetrievesTheDataFor(string p0, DataTable dataTable)
-{
-    throw new PendingStepException();
-}
-
+-> skipped because of previous errors
 Given User click on 'Requests' under 'Service' section
 -> skipped because of previous errors
 And User click on 'New' button from 'menubar'
 -> skipped because of previous errors
 And User looked for 'Job Type' field value
--> undefined: No matching step definition found for the step. Use the following code to create one:
-        [Given("User looked for {string} field value")]
-public void GivenUserLookedForFieldValue(string p0)
-{
-    throw new PendingStepException();
-}
-
+-> skipped because of previous errors
 And User scroll to 'Billing Authority Link' element
 -> skipped because of previous errors
 And User entered 0 days before date for 'Date Received' field value
--> undefined: No matching step definition found for the step. Use the following code to create one:
-        [Given("User entered {int} days before date for {string} field value")]
-public void GivenUserEnteredDaysBeforeDateForFieldValue(int p0, string p1)
-{
-    throw new PendingStepException();
-}
-
+-> skipped because of previous errors
 And User entered 25 days after date for 'Target Date' field value
--> undefined: No matching step definition found for the step. Use the following code to create one:
-        [Given("User entered {int} days after date for {string} field value")]
-public void GivenUserEnteredDaysAfterDateForFieldValue(int p0, string p1)
-{
-    throw new PendingStepException();
-}
-
+-> skipped because of previous errors
 And User enter data for 'Remarks' text area field value
--> undefined: No matching step definition found for the step. Use the following code to create one:
-        [Given("User enter data for {string} text area field value")]
-public void GivenUserEnterDataForTextAreaFieldValue(string remarks)
-{
-    throw new PendingStepException();
-}
-
+-> skipped because of previous errors
 And User click on 'Find Hereditament' button
 -> undefined: No matching step definition found for the step. Use the following code to create one:
         [Given("User click on {string} button")]
@@ -104,31 +74,13 @@ public void GivenUserClickOnButton(string p0)
 }
 
 And User select 'UPRN' value from 'Search By' dropdown
--> undefined: No matching step definition found for the step. Use the following code to create one:
-        [Given("User select {string} value from {string} dropdown")]
-public void GivenUserSelectValueFromDropdown(string uPRN, string p1)
-{
-    throw new PendingStepException();
-}
-
+-> skipped because of previous errors
 And User enters data in "UPRN" field
--> undefined: No matching step definition found for the step. Use the following code to create one:
-        [Given("User enters data in {string} field")]
-public void GivenUserEntersDataInField(string uPRN0)
-{
-    throw new PendingStepException();
-}
-
+-> skipped because of previous errors
 And User clicked on 'Search' button
 -> skipped because of previous errors
 And User slects spcific 'uprn' row from search hereditament results
--> undefined: No matching step definition found for the step. Use the following code to create one:
-        [Given("User slects spcific {string} row from search hereditament results")]
-public void GivenUserSlectsSpcificRowFromSearchHereditamentResults(string uprn)
-{
-    throw new PendingStepException();
-}
-
+-> skipped because of previous errors
 And User clicked on 'Select' button
 -> skipped because of previous errors
 And User waits till Find Hereditament dialog disappears
@@ -208,13 +160,7 @@ Then User validate below business stages on business journey header
   | BusinessStages |
   | Details        |
   | Researching    |
--> undefined: No matching step definition found for the step. Use the following code to create one:
-        [Then("User validate below business stages on business journey header")]
-public void ThenUserValidateBelowBusinessStagesOnBusinessJourneyHeader(DataTable dataTable)
-{
-    throw new PendingStepException();
-}
-
+-> skipped because of previous errors
 And User clicked on 'Next Stage' for 'Details' journey on the headerbar
 -> undefined: No matching step definition found for the step. Use the following code to create one:
         [Then("User clicked on {string} for {string} journey on the headerbar")]
@@ -432,13 +378,7 @@ public void ThenUserWaitsTillDisappears(string p0, string progressbar1)
 }
 
 Then User validate value 'Pass' for 'PAD Validation Outcome' field
--> undefined: No matching step definition found for the step. Use the following code to create one:
-        [Then("User validate value {string} for {string} field")]
-public void ThenUserValidateValueForField(string pass, string p1)
-{
-    throw new PendingStepException();
-}
-
+-> skipped because of previous errors
 And User click on 'Save' button from 'menubar'
 -> undefined: No matching step definition found for the step. Use the following code to create one:
         [Then("User click on {string} button from {string}")]
@@ -623,5 +563,5 @@ public void ThenUserClosesBrowser()
     throw new PendingStepException();
 }
 
-[12:05:50 ERR] Scenario failed — screenshot saved: 20260514_120550_284_FAILED.png
-[12:05:51 INF] Browser disposed
+[13:56:12 ERR] Scenario failed — screenshot saved: 20260514_135612_353_FAILED.png
+[13:56:23 INF] Browser disposed
