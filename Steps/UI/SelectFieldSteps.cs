@@ -108,11 +108,11 @@ namespace BSTVOAQAAutomation.Playwright.Steps.UI
             }
 
             // 2 — Fluent UI ms-Dropdown (e.g. "Search By" in Find Hereditament dialog).
-            //     These are div/button triggers, NOT aria-label-based. Find the trigger by:
-            //     a) direct aria-label match
-            //     b) role=listbox / role=combobox with label contains
-            //     c) a div with ms-Dropdown class that is adjacent to a label containing the text
+            //     The trigger is a <button class="ms-Dropdown-title"> inside a container div
+            //     that is preceded or accompanied by a <label> with the field name.
             var trigger = _pw.Page.Locator(
+                $"div[class*='ms-Dropdown-container']:has(label:has-text('{fieldName}')) button[class*='ms-Dropdown-title'], " +
+                $"button[class*='ms-Dropdown-title']:near(label:has-text('{fieldName}')), " +
                 $"[aria-label='{fieldName}'], " +
                 $"[aria-label*='{fieldName}'][role='listbox'], " +
                 $"[aria-label*='{fieldName}'][role='combobox'], " +
