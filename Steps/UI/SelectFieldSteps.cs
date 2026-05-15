@@ -95,29 +95,43 @@ namespace BSTVOAQAAutomation.Playwright.Steps.UI
 
         private async Task SelectDropdownValue(string fieldName, string value)
         {
+            // 1 — Standard HTML <select> (Dynamics option-set fields)
             var selectEl = _pw.Page.Locator(
-                $"select[aria-label='{fieldName}'], select[aria-label*='{fieldName}']").First;
+                $"select[aria-label='{fieldName}'], " +
+                $"select[aria-label*='{fieldName}'], " +
+                $"select[title*='{fieldName}']").First;
             if (await selectEl.IsVisibleAsync())
             {
                 await selectEl.SelectOptionAsync(new SelectOptionValue { Label = value });
-                Log.Information("Selected '{Value}' from select '{Field}'", value, fieldName);
+                Log.Information("Selected '{Value}' from <select> '{Field}'", value, fieldName);
                 return;
             }
 
-            var btn = _pw.Page.Locator(
-                $"button[aria-label='{fieldName}'], " +
+            // 2 — Fluent UI ms-Dropdown (e.g. "Search By" in Find Hereditament dialog).
+            //     These are div/button triggers, NOT aria-label-based. Find the trigger by:
+            //     a) direct aria-label match
+            //     b) role=listbox / role=combobox with label contains
+            //     c) a div with ms-Dropdown class that is adjacent to a label containing the text
+            var trigger = _pw.Page.Locator(
+                $"[aria-label='{fieldName}'], " +
+                $"[aria-label*='{fieldName}'][role='listbox'], " +
+                $"[aria-label*='{fieldName}'][role='combobox'], " +
+                $"div[class*='ms-Dropdown'][role='listbox']:near(label:has-text('{fieldName}')), " +
                 $"button[aria-label*='{fieldName}'], " +
-                $"[data-id*='{fieldName}'] button").First;
-            await btn.ScrollIntoViewIfNeededAsync();
-            await btn.EvaluateAsync("el => el.click()");
-            await _pw.Page.WaitForTimeoutAsync(500);
+                $"[data-id*='{fieldName.ToLower().Replace(" ", "")}'] button").First;
 
+            await trigger.ScrollIntoViewIfNeededAsync();
+            await trigger.EvaluateAsync("el => el.click()");
+            await _pw.Page.WaitForTimeoutAsync(600);
+
+            // 3 — Click the option in the opened callout / listbox
             var option = _pw.Page.Locator(
                 $"[role='option']:has-text('{value}'), " +
-                $"li:has-text('{value}'), " +
-                $"option:has-text('{value}')").First;
+                $"[role='listbox'] button:has-text('{value}'), " +
+                $"[class*='ms-Dropdown-item']:has-text('{value}'), " +
+                $"li:has-text('{value}')").First;
             await option.EvaluateAsync("el => el.click()");
-            Log.Information("Selected '{Value}' from flyout '{Field}'", value, fieldName);
+            Log.Information("Selected '{Value}' from Fluent UI dropdown '{Field}'", value, fieldName);
         }
     }
 }
