@@ -38,8 +38,9 @@ namespace BSTVOAQAAutomation.Playwright.Steps.UI
         public async Task GivenUserLookedForFieldValueOnlyWhenDataNotEntered(string fieldName)
         {
             var input = _pw.Page.Locator(
-                $"[data-id*='{fieldName}'] input, " +
-                $"input[aria-label*='{fieldName}']").First;
+                $"input[aria-label='{fieldName}'], " +
+                $"input[aria-label*='{fieldName}'][role='combobox'], " +
+                $"input[aria-label*='{fieldName}, Lookup']").First;
             try
             {
                 await input.ScrollIntoViewIfNeededAsync();
@@ -64,8 +65,9 @@ namespace BSTVOAQAAutomation.Playwright.Steps.UI
                 return;
 
             var input = _pw.Page.Locator(
-                $"[data-id*='{fieldName}'] input, " +
-                $"input[aria-label*='{fieldName}']").First;
+                $"input[aria-label='{fieldName}'], " +
+                $"input[aria-label*='{fieldName}'][role='combobox'], " +
+                $"input[aria-label*='{fieldName}, Lookup']").First;
             try
             {
                 await input.ScrollIntoViewIfNeededAsync();
@@ -108,11 +110,13 @@ namespace BSTVOAQAAutomation.Playwright.Steps.UI
 
         internal async Task FillLookupField(string fieldName, string value)
         {
+            // Dynamics lookup fields have aria-label="FieldName, Lookup" (not just "FieldName")
+            // so use contains (*=) not exact (=).
             var input = _pw.Page.Locator(
                 $"input[aria-label='{fieldName}'], " +
-                $"input[aria-label*='{fieldName} Search'], " +
-                $"[data-id*='{fieldName}'] input[role='combobox'], " +
-                $"[data-id*='{fieldName}'] input").First;
+                $"input[aria-label*='{fieldName}'][role='combobox'], " +
+                $"input[aria-label*='{fieldName}, Lookup'], " +
+                $"input[aria-label*='{fieldName} Search']").First;
 
             await input.ScrollIntoViewIfNeededAsync();
             await input.ClickAsync();
@@ -144,7 +148,8 @@ namespace BSTVOAQAAutomation.Playwright.Steps.UI
         {
             var input = _pw.Page.Locator(
                 $"input[aria-label='{fieldName}'], " +
-                $"[data-id*='{fieldName}'] input").First;
+                $"input[aria-label*='{fieldName}'][role='combobox'], " +
+                $"input[aria-label*='{fieldName}, Lookup']").First;
 
             await input.ScrollIntoViewIfNeededAsync();
             await input.ClickAsync();
