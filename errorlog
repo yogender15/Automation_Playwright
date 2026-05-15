@@ -1,11 +1,11 @@
  DE01_CTPRELMGMT_1607_CTPRELMGMT_1635_E2EDataEnhancement_FullProcessOfAmendingACommittedPADSet
    Source: DataEnhancement.feature line 10
-   Duration: 1.9 min
+   Duration: 1.7 min
 
   Message: 
 System.TimeoutException : Timeout 30000ms exceeded.
 Call log:
-  -   - waiting for Locator("button[aria-label='Search By'], button[aria-label*='Search By'], [data-id*='Search By'] button").First
+  -   - waiting for Locator("[aria-label='Search By'], [aria-label*='Search By'][role='listbox'], [aria-label*='Search By'][role='combobox'], div[class*='ms-Dropdown'][role='listbox']:near(label:has-text('Search By')), button[aria-label*='Search By'], [data-id*='searchby'] button").First
 
   Stack Trace: 
 Connection.InnerSendMessageToServerAsync[T](ChannelOwner object, String method, Dictionary`2 dictionary, Boolean keepNulls)
@@ -14,8 +14,8 @@ Connection.WrapApiCallAsync[T](Func`1 action, Boolean isInternal)
 --- End of stack trace from previous location ---
 Connection.WrapApiCallAsync[T](Func`1 action, Boolean isInternal)
 Locator.WithElementAsync(Func`3 callback, Nullable`1 timeout)
-SelectFieldSteps.SelectDropdownValue(String fieldName, String value) line 102
-SelectFieldSteps.GivenUserSelectValueFromDropdown(String value, String fieldName) line 25
+SelectFieldSteps.SelectDropdownValue(String fieldName, String value) line 123
+SelectFieldSteps.GivenUserSelectValueFromDropdown(String value, String fieldName) line 27
 AsyncMethodHelper.ConvertTaskOfT(Task task, Boolean getValue)
 BindingDelegateInvoker.InvokeDelegateAsync(Delegate bindingDelegate, Object[] invokeArgs, ExecutionContextHolder executionContext)
 <8 more frames...>
@@ -31,52 +31,52 @@ TestMethodCommand.Execute(TestExecutionContext context)
 DelegatingTestCommand.RunTestMethodInThreadAbortSafeZone(TestExecutionContext context, Action action)
 
   Standard Output: 
-[10:17:04 INF] Browser started for scenario: DE01_CTPRELMGMT-1607_CTPRELMGMT-1635_E2E Data Enhancement - Full process of Amending a Committed PAD set
+[10:50:59 INF] Browser started for scenario: DE01_CTPRELMGMT-1607_CTPRELMGMT-1635_E2E Data Enhancement - Full process of Amending a Committed PAD set
 Given User uses test data with ID 'DE_001' from 'DataEnhancement' sheet
-[10:17:06 INF] Test data loaded: DE_001 from sheet DataEnhancement
--> done: CommonSteps.GivenUserUsesTestDataWithIDFromSheet("DE_001", "DataEnhancement") (1.5s)
+[10:51:00 INF] Test data loaded: DE_001 from sheet DataEnhancement
+-> done: CommonSteps.GivenUserUsesTestDataWithIDFromSheet("DE_001", "DataEnhancement") (0.7s)
 Given User is logged in to Dynamics application to work for "E2E_Committed_Amend_DE" case
-[10:17:07 INF] Navigated to: https://voabstsit.crm11.dynamics.com/
-[10:17:56 INF] Legal Notice dismissed — el.click() via JS
-[10:17:56 INF] User is ready in Dynamics 365
-[10:17:56 INF] Logged in for case: E2E_Committed_Amend_DE
--> done: LoginSteps.GivenUserIsLoggedInToDynamicsApplicationToWorkForCase("E2E_Committed_Ame...") (49.9s)
+[10:51:01 INF] Navigated to: https://voabstsit.crm11.dynamics.com/
+[10:51:49 INF] Legal Notice dismissed — el.click() via JS
+[10:51:49 INF] User is ready in Dynamics 365
+[10:51:49 INF] Logged in for case: E2E_Committed_Amend_DE
+-> done: LoginSteps.GivenUserIsLoggedInToDynamicsApplicationToWorkForCase("E2E_Committed_Ame...") (49.1s)
 And User collapse if site map navigation expanded on left pane
 -> done: LoginSteps.GivenUserCollapseIfSiteMapNavigationExpandedOnLeftPane() (0.0s)
 And User connects to the DB and retrieves the data for 'findHereditament_WestLancashire_DE'
   --- table step argument ---
   | fieldName |
   | uprn      |
-[10:17:56 INF] Executing DB query for key: findHereditament_WestLancashire_DE
-[10:18:02 INF] Azure DB access token acquired (length: 4254)
-[10:18:04 INF] DB field 'uprn' = '10012364321'
--> done: DynamicsSteps.GivenUserConnectsToDBAndRetrievesDataFor("findHereditament_...", <table>) (8.1s)
+[10:51:49 INF] Executing DB query for key: findHereditament_WestLancashire_DE
+[10:51:52 INF] Azure DB access token acquired (length: 4254)
+[10:51:55 INF] DB field 'uprn' = '10012358039'
+-> done: DynamicsSteps.GivenUserConnectsToDBAndRetrievesDataFor("findHereditament_...", <table>) (5.2s)
 Given User click on 'Requests' under 'Service' section
-[10:18:04 INF] Clicked 'Requests' under 'Service'
--> done: CommonSteps.GivenUserClickOnUnderSection("Requests", "Service") (0.2s)
+[10:51:55 INF] Clicked 'Requests' under 'Service'
+-> done: CommonSteps.GivenUserClickOnUnderSection("Requests", "Service") (0.3s)
 And User click on 'New' button from 'menubar'
-[10:18:06 INF] Clicked 'New' from menubar
--> done: CommonSteps.GivenUserClickOnButtonFrom("New", "menubar") (2.1s)
+[10:51:57 INF] Clicked 'New' from menubar
+-> done: CommonSteps.GivenUserClickOnButtonFrom("New", "menubar") (2.3s)
 And User looked for 'Job Type' field value
-[10:18:16 INF] Filled lookup 'Job Type' with 'Data Enhancement'
--> done: LookupFieldSteps.GivenUserLookedForFieldValue("Job Type") (9.4s)
+[10:52:07 INF] Filled lookup 'Job Type' with 'Data Enhancement'
+-> done: LookupFieldSteps.GivenUserLookedForFieldValue("Job Type") (9.3s)
 And User scroll to 'Billing Authority Link' element
-[10:18:17 INF] Scrolled to element: Billing Authority Link
--> done: CommonSteps.GivenUserScrollToElement("Billing Authority...") (1.2s)
+[10:52:07 INF] Scrolled to element: Billing Authority Link
+-> done: CommonSteps.GivenUserScrollToElement("Billing Authority...") (0.6s)
 And User entered 0 days before date for 'Date Received' field value
-[10:18:18 INF] Entered date '5/15/2026' in field 'Date Received'
--> done: DateFieldSteps.GivenUserEnteredDaysBeforeDateForFieldValue(0, "Date Received") (0.4s)
+[10:52:08 INF] Entered date '5/15/2026' in field 'Date Received'
+-> done: DateFieldSteps.GivenUserEnteredDaysBeforeDateForFieldValue(0, "Date Received") (0.5s)
 And User entered 25 days after date for 'Target Date' field value
-[10:18:18 INF] Entered date '6/9/2026' in field 'Target Date'
--> done: DateFieldSteps.GivenUserEnteredDaysAfterDateForFieldValue(25, "Target Date") (0.5s)
+[10:52:08 INF] Entered date '6/9/2026' in field 'Target Date'
+-> done: DateFieldSteps.GivenUserEnteredDaysAfterDateForFieldValue(25, "Target Date") (0.4s)
 And User enter data for 'Remarks' text area field value
-[10:18:18 INF] Entered 'Testing' in textarea 'Remarks'
--> done: InputFieldSteps.GivenUserEnterDataForTextAreaFieldValue("Remarks") (0.0s)
+[10:52:08 INF] Entered 'Testing' in textarea 'Remarks'
+-> done: InputFieldSteps.GivenUserEnterDataForTextAreaFieldValue("Remarks") (0.1s)
 And User click on 'Find Hereditament' button
-[10:18:18 INF] Clicked button: Find Hereditament
--> done: CommonSteps.GivenUserClickOnButton("Find Hereditament") (0.2s)
+[10:52:09 INF] Clicked button: Find Hereditament
+-> done: CommonSteps.GivenUserClickOnButton("Find Hereditament") (0.3s)
 And User select 'UPRN' value from 'Search By' dropdown
 -> error: Timeout 30000ms exceeded.
 Call log:
-  -   - waiting for Locator("button[aria-label='Search By'], button[aria-label*='Search By'], [data-id*='Search By'] button").First (30.1s)
-[10:18:49 ERR] Screenshot saved: 20260515_101849_465_DE01_CTPRELMGMT-1607_CTPRELMGMT-1635_E2E Data Enhancement - _STEP_FAILED.png
+  -   - waiting for Locator("[aria-label='Search By'], [aria-label*='Search By'][role='listbox'], [aria-label*='Search By'][role='combobox'], div[class*='ms-Dropdown'][role='listbox']:near(label:has-text('Search By')), button[aria-label*='Search By'], [data-id*='searchby'] button").First (30.1s)
+[10:52:39 ERR] Screenshot saved: 20260515_105239_763_DE01_CTPRELMGMT-1607_CTPRELMGMT-1635_E2E Data Enhancement - _STEP_FAILED.png
